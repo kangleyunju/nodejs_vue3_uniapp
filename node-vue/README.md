@@ -20,3 +20,5 @@ cnpm install
 
 ## 截图
 ![image](https://github.com/kangleyunju/vue3_nodejs_uniapp/blob/main/node-vue/images/1.png)
+![image](https://github.com/kangleyunju/vue3_nodejs_uniapp/blob/main/node-vue/images/2.png)
+![image](https://github.com/kangleyunju/vue3_nodejs_uniapp/blob/main/node-vue/images/3.png)
