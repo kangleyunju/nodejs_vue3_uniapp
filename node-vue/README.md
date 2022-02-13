@@ -19,4 +19,4 @@ npm install -g cnpm --registry=https://registry.npmmirror.com
 cnpm install
 
 ## 截图
-![image](https://www.xunyoutest.com/image.php/shop/data/upload/media/store/11/image/20211104/1635990034404793.png!300x300.jpg)
+![image](https://github.com/kangleyunju/vue3_nodejs_uniapp/blob/main/node-vue/images/1.png)
