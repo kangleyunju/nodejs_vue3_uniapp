@@ -73,6 +73,30 @@
 				form,
 				uploadFace,
 			}
+		},
+		created(){
+			console.log('created')
+		},
+		berforeCreated(){
+			console.log('berforeCreated')
+		},
+		mounted(){
+			console.log('mounted')
+		},
+		berforeMounted(){
+			console.log('berforeMounted')
+		},
+		updated(){
+			console.log('updated')
+		},
+		berforeUpdated(){
+			console.log('berforeUpdated')
+		},
+		destroyed(){
+			console.log('destroyed')
+		},
+		berforeDestroyed(){
+			console.log('berforeDestroyed')
 		}
 	})
 </script>

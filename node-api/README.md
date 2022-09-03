@@ -1,25 +1,22 @@
-## node_demo
-nodejs +express +mysql 写后端接口 ,包括增删改查, 图片上传, 分页, 模糊查询, 排序 ,简单实用, 实现了接口路由
+ ### 简介
+nodejs+express+mysql操作数据库，简单实用，包括增删改查、图片上传、分页、模糊查询、排序、接口路由等
 
+### 步骤
+先把test.sql导入mysql数据库，可以用Navicat Premium 12运行sql文件，如果报错，可能是node版本不是最新版
 
-## 步骤
+### 下载
 ```
-//先把test.sql 导入mysql数据库, 可以用Navicat Premium 12
-运行sql文件
-
-//先下载依赖
 npm install
-
-//接口调试, 便于实时更新
+```
+### 运行
+```
+npm start
+```
+### 接口调试, 便于实时更新
+```
 npm i supervisor -g
 supervisor app.js
-
-//启动
-npm start
-
-//如果报错,可能是node版本不是最新版
 ```
-
 
 ## 目录
 - api  接口
@@ -77,7 +74,3 @@ http://localhost:3000/user/person?user_id=10001
   }
 }
 ```
-
-
-## 联系我
-邮箱249042680@qq.com

@@ -31,6 +31,9 @@
 			Slide,
 			Tags
 		},
+		provide:{
+			message:'这是隔代传值的方法',
+		},
 		setup() {
 			const store = useStore();
 			const collapse = computed(() => store.state.collapse);

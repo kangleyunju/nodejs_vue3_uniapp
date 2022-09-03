@@ -1,0 +1,121 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "%tab.index%",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/index/login",
+			"style": {
+				"navigationBarTitleText": "%login%"
+			}
+		},
+		{
+			"path": "pages/index/test",
+			"style": {
+				"navigationBarTitleText": "%test%"
+			}
+		},
+		{
+			"path": "pages/index/error",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/goods/add",
+			"style": {
+				"navigationBarTitleText": "%goodAdd%"
+			}
+		},
+		{
+			"path": "pages/goods/my",
+			"style": {
+				"navigationBarTitleText": "%myGood%"
+			}
+		},
+		{
+		    "path" : "pages/goods/examine",
+			"style": {
+				"navigationBarTitleText": "%goodReview%"
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "%tab.my%",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#F52B43"
+			}
+		},
+		{
+			"path": "pages/user/room",
+			"style": {
+				"navigationBarTitleText": "%chatRoom%"
+			}
+		},
+		{
+			"path": "pages/user/info",
+			"style": {
+				"navigationBarTitleText": "%userInfo%"
+			}
+		},
+		{
+			"path": "pages/user/cropImage",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#0c0c0c",
+				"app-plus": {
+					"titleNView": true
+				}
+			}
+		},
+		{
+			"path": "pages/user/list",
+			"style": {
+				"navigationBarTitleText": "%userList%"
+			}
+		},
+		{
+			"path": "pages/user/set",
+			"style": {
+				"navigationBarTitleText": "%set%"
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#B3B5BA",
+		"selectedColor": "#F52B43",
+		"borderStyle": "white",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/icon/tab1.png",
+				"selectedIconPath": "static/icon/tab1_active.png",
+				"text": "%tab.index%"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"iconPath": "static/icon/tab2.png",
+				"selectedIconPath": "static/icon/tab2_active.png",
+				"text": "%tab.my%"
+			}
+		]
+	}
+}

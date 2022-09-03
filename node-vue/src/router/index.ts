@@ -125,6 +125,14 @@ const routes: RouteRecordRaw[] = [
 	    component: () => import("@/views/index/403.vue")
 	},
 	{
+	    path: "/404",
+	    name: "404",
+	    meta: {
+	        title: '找不到页面'
+	    },
+	    component: () => import("@/views/index/404.vue")
+	},
+	{
 	    path: "/:catchAll(.*)",
 	    name: "404",
 	    meta: {

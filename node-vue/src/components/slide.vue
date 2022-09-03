@@ -32,6 +32,10 @@ import { computed, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 export default {
+	inject:["message","people"],
+	created(){
+		console.log('子孙组件接收到数据:'+this.message)
+	},
     setup() {
         const list = [
             {
