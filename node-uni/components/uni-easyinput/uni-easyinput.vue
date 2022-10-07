@@ -13,7 +13,7 @@
 			 }"
 			 :name="name" :value="val" :password="!showPassword && type === 'password'" :placeholder="placeholder"
 			 :placeholderStyle="placeholderStyle" :disabled="disabled" :maxlength="inputMaxlength" :focus="focused" :confirmType="confirmType" @focus="onFocus"
-			 @blur="onBlur" @input="onInput" @confirm="onConfirm" />
+			 @blur="onBlur" @input="onInput" @confirm="onConfirm" autocomplete="off"/>
 			<template v-if="type === 'password' && passwordIcon" >
 				<uni-icons v-if="val != '' " class="content-clear-icon" :class="{'is-textarea-icon':type==='textarea'}" :type="showPassword?'eye-slash-filled':'eye-filled'"
 				 :size="18" color="#c0c4cc" @click="onEyes"></uni-icons>

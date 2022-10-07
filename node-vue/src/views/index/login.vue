@@ -30,8 +30,8 @@
 			const store = useStore();
 			const state = ref(1)
 			const ruleForm = reactive({
-			  account: "",
-			  password: "",
+			  account: "admin",
+			  password: "123456",
 			})
 			const rules = reactive({
 			  account: [{ required: true, message: "请输入账号", trigger: "blur" }],
@@ -75,6 +75,7 @@
 			}
 		},
 		methods: {
+			// 设置背景
 			setBackGroundImg() {
 				window.requestAnimFrame = (function() {
 					return window.requestAnimationFrame

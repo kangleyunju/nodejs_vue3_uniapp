@@ -12,7 +12,7 @@
 				<diy-swiper v-if="item.sorts=='diy-swiper'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
 				<diy-notice v-if="item.sorts == 'diy-notice'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
 				<diy-empty v-if="item.sorts == 'diy-empty'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
-				<diy-icon v-if="item.sorts == 'diy-icon'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
+				<diy-entry v-if="item.sorts == 'diy-entry'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
 				<diy-image v-if="item.sorts == 'diy-image'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
 				<diy-goods v-if="item.sorts == 'diy-goods'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
 				<diy-cate v-if="item.sorts == 'diy-cate'" :dat="item" :index="index" @getUnique="activeGetUnique"/>
@@ -25,7 +25,6 @@
 	export default {
 		data() {
 			return {
-				mainColor:'',
 				background_color:'',
 				list:[],
 				id:1
@@ -37,14 +36,11 @@
 				this.list=this.diyData.sorts
 				this.background_color=this.diyData.background_color
 				// #ifdef H5
-				window.addEventListener('message', this.response);
+				window.addEventListener('message', this.acceptMessage)
 				uni.setNavigationBarTitle({
 					title:this.diyData.page_name||this.baseName
-				});
+				})
 				// #endif
-			},
-			response(event) {
-				this.save(event, this);
 			}
 		},
 		watch:{
@@ -71,7 +67,6 @@
 				uni.hideTabBar()
 			}
 			this.id=e.id?e.id:1
-			this.mainColor=this.$mainColor
 			this.getList()
 		}
 	}

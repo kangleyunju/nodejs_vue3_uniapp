@@ -6,43 +6,61 @@ export default {
 				id: 0,//模板id
 				sorts: [],// 项目的布局数据（可改变）
 				page_name: "",//页面顶部标题
-				background_color:''//页面底色
+				background_color:"#F8F8F8"//页面底色
 			}
 		}
 	},
 	methods: {
 		// 获取布局数据
 		async getDiy(id) {
-			await this.$get('diy/detail',{
-				id:id,
-			}).then(res => {
-				this.diyData = res.data
-				this.initSortable('xzw_sortable');
+			this.noComp()
+			if(this.isApi){
+				await this.$get('diy/detail',{
+					id:id,
+				}).then(res => {
+					this.diyData = res.data
+					this.initSortable('xzw_sortable');
+					window.parent.postMessage({
+						method: 'sendPageData',
+						data: res.data
+					}, '*')
+					return this.diyData
+				})
+			}else{
+				this.diyData = this.getStorage('pageInfo')
+				if(this.diyData==""){
+					this.diyData={
+						id: id,
+						sorts: [],
+						name:"页面名称",
+						page_name: "",
+						background_color:"#F8F8F8"
+					}
+				}else{
+					this.diyData.sorts=JSON.parse(this.diyData.sorts)
+				}
+				this.initSortable('xzw_sortable')
 				window.parent.postMessage({
 					method: 'sendPageData',
-					data: res.data
+					data: this.diyData
 				}, '*')
 				return this.diyData
-			})
+			}
 		},
 		// 初始化 Sortablejs
 		async initSortable(id) {
-			// #ifdef H5
-			const el = await document.getElementById(id);
-			// #endif
-			let options = {};
-			options = await {
+			let options = options = await {
 				group: {
 					name: 'sort',
 					pull: true,
-					put: false,
+					put: true,
 				},
 				animation: 200,
 				forceFallback: true,
-				dragClass: 'choose-active',
-				chosenClass: 'choose-active_1',
+				dragClass: 'drag',
+				chosenClass: 'chosen',
 				disabled: false,
-				filter: '.st-item-fixed',
+				filter: '.filter',
 				scroll: false,
 				handle: '.moveHandleBox',
 				// 只有在盒子内可移动项的排序发生改变时才会触发
@@ -69,6 +87,7 @@ export default {
 				}
 			}
 			// #ifdef H5
+			const el = await document.getElementById(id);
 			if(this.$state.editStatus){
 				sortablejs.create(el, options)
 			}
@@ -85,8 +104,8 @@ export default {
 				sorts.splice(old_index + 1, 1);
 			}
 		},
-		// 先筛选页面监听父窗口请求
-		save(event) {
+		// 监听父窗口请求
+		acceptMessage(event) {
 			let data=event.data.data
 			switch (event.data.method) {
 				case 'setPageInfo':
@@ -113,6 +132,9 @@ export default {
 				case 'noComp':
 					this.noComp();
 					break;
+				case 'getDiy':
+					this.getDiy(event.data.id);
+					break;
 			}
 		},
 		//设置页面信息
@@ -121,7 +143,7 @@ export default {
 		},
 		// 保存布局到数据库
 		async layoutSave(e) {
-			var data={
+			var params={
 				name:e.name,
 				page_name:e.page_name,
 				background_color:e.background_color,
@@ -129,29 +151,35 @@ export default {
 				sorts:JSON.stringify(this.diyData.sorts),
 				id:e.id
 			}
-			uni.showLoading({
-				title:'保存中..',
-				mask:true
-			})
-			await this.$post('diy/edit',data)
-			.then(res => {
-				uni.hideLoading()
-				if(res.code==200){
+			if(this.isApi){
+				await this.$post('diy/edit',data)
+				.then(res => {
+					if(res.code==200){
+						window.parent.postMessage({
+							method: 'saveResult',
+							data:1
+						}, '*');
+					}else{
+						window.parent.postMessage({
+							method: 'saveResult',
+							data:2
+						}, '*')
+					}
+				})
+			}else{
+				this.setStorage('pageInfo',params)
+				setTimeout(()=>{
 					window.parent.postMessage({
-						method: 'saveSuccess',
-					}, '*');
-				}else{
-					window.parent.postMessage({
-						method: 'saveFail',
+						method: 'saveResult',
+						data:1
 					}, '*')
-				}
-			})
+				},1000)
+			}
 		},
 		// 添加新组件
-		addComponent(params) {
-			let attr_obj = params.attr_obj;
-			attr_obj.unique = Math.floor((new Date()).getTime() / 1000);
-			this.diyData.sorts.splice(0, 0, attr_obj);
+		addComponent(attrObj) {
+			attrObj.unique = Math.floor((new Date()).getTime() / 1000);
+			this.diyData.sorts.splice(0, 0, attrObj);
 			if(this.$state.diySelect.unique>0){
 				for(var i in this.diyData.sorts){
 					if(this.diyData.sorts[i].unique==this.$state.diySelect.unique)
@@ -163,18 +191,18 @@ export default {
 		// 更新组件属性内容
 		updateAttr(data, oldthis) {
 			let sorts = this.diyData.sorts;
-			for (let k in sorts) {
-				if (sorts[k].unique == data.unique) {
-					let item = JSON.parse(JSON.stringify(sorts[k]));
+			for (let i in sorts) {
+				if (sorts[i].unique == data.unique) {
+					let item = JSON.parse(JSON.stringify(sorts[i]));
 					let obj = {
 						id: sorts.id,
 						type: 'update',
-						unique: sorts[k].unique,
+						unique: sorts[i].unique,
 						item,
 						new_data: data
 					};
-					for (let kk in data) {
-						this.diyData.sorts[k][kk] = data[kk];
+					for (let j in data) {
+						this.diyData.sorts[i][j] = data[j]
 					}
 					break;
 				}

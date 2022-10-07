@@ -8,7 +8,7 @@ Vue.mixin(methods).mixin(diy)
 import messages from './locale/index'
 
 // console.log = () => {}
-
+Vue.prototype.isApi = false
 Vue.prototype.$state = store.state
 Vue.prototype.$change = store._mutations.change[0]
 

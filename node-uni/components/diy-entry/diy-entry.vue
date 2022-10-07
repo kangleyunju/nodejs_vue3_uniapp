@@ -1,14 +1,13 @@
 <template>
-	<view class="diy-icon">
+	<view class="diy-entry">
 		<move-handle @choose="choose" :dat="dat">
-			<view class="diy-iconBox" :style="{paddingTop:dat.paddingTop+'upx',paddingBottom:dat.paddingBottom+'upx'}">
+			<view class="diy-entryBox" :style="{paddingTop:dat.paddingTop+'upx',paddingBottom:dat.paddingBottom+'upx'}">
 				<view class="iconBox" v-if="iconShow==1">
 					<view class="icon" @click="goIcon(item.url)" v-for="(item,index) in iconList" :key="index" :style="{width:100/(group/2)+'%'}">
 						<image :src="item.img||'/static/icon/entrance.png'" mode="aspectFit"/>
 						<view>{{item.name||'名称'}}</view>
 					</view>
 				</view>
-				
 				<swiper  :indicator-dots="false" :autoplay="false" circular @change="changeSwiper" v-if="iconShow==2">
 					<swiper-item class="iconBox" v-for="(item,index) in iconList" :key="index">
 						<view class="icon" v-for="(item2,index2) in item" :key="index2" @click="goIcon(item2.url)"  :style="{width:100/(group/2)+'%'}">
@@ -78,7 +77,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.diy-iconBox{
+	.diy-entryBox{
 		.iconBox{
 			display: flex;
 			flex-wrap: wrap;

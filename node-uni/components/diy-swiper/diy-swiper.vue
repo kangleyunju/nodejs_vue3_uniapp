@@ -156,7 +156,7 @@
 				bottom: 10upx;
 				padding: 4upx 16upx;
 				background-color: rgba(0,0,0,0.3);
-				color: #fa0;
+				color: #f1f1f1;
 				display: flex;
 				align-items: center;
 				justify-content: center;

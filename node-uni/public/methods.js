@@ -4,7 +4,6 @@ export default {
 	data(){
 		return{
 			baseUrl:'http://localhost:7000',
-			// baseUrl:'http://172.21.151.209:7000',
 			isDev:true,
 			baseName:"我的世界",
 			baseWs:'ws://192.168.0.141:8000',
@@ -37,7 +36,7 @@ export default {
 			 plus.runtime.openURL(url)
 			 // #endif
 			 // #ifdef H5
-			 window.location.href=url
+			 window.open(url)
 			 // #endif
 		},
 		changeTime(t){

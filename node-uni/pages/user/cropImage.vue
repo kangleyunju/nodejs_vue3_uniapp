@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="cropImageContainer">
 		<l-clipper :width="options.width" :scale-ratio="2" :is-lock-width="false" :is-lock-height="false" :height="options.height" :image-url="path" @success="successFn" @cancel="cancel" />
 	</view>
 </template>
@@ -33,12 +33,6 @@
 	}
 </script>
 
-<style>
-	.box {
-		/* width: 400rpx; */
-	}
+<style lang="scss">
 
-	.mt {
-		/* margin-top: -10px; */
-	}
 </style>
