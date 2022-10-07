@@ -14,3 +14,6 @@ uniapp，vue2
 [gitee](https://gitee.com/kangleyunju/nodejs_vue3_uniapp)
 
 [github](https://github.com/kangleyunju/nodejs_vue3_uniapp)
+
+### 网址
+https://static-2503170c-6f74-4217-ac1a-43133fb6d1b4.bspapp.com/wap
