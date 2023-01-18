@@ -92,6 +92,8 @@
 							});
 						})
 						// #endif
+            this.userInfo.face=filePath
+            return
 						this.$upload(filePath).then((res)=>{
 							this.userInfo.face=res.path
 							this.save()
@@ -102,6 +104,12 @@
 		},
 		onLoad() {
 			this.endDate=this.changeTime()
+      this.userInfo={
+        face:'',
+        name:'12321'
+      }
+      this.show=true
+      return
 			if(this.hasLogin(2)){
 				this.user_id=this.getUserInfo().user_id
 				this.getUser()

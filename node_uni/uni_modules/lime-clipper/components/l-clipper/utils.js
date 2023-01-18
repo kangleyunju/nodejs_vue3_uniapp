@@ -79,8 +79,10 @@ export function calcImageScale(data, scale) {
 		angle
 	} = data
 	if ((angle / 90) % 2) {
-		imageWidth = imageHeight;
-		imageHeight = imageWidth;
+		[imageWidth, imageHeight] = [imageHeight, imageWidth]
+	}
+	if(angle !== 0 && scale == Math.max(clipWidth / imageHeight ,  clipHeight / imageWidth )) {
+		return Math.max(clipWidth / imageWidth ,  clipHeight / imageHeight )
 	}
 	if (imageWidth * scale < clipWidth) {
 		scale = clipWidth / imageWidth;
@@ -88,7 +90,7 @@ export function calcImageScale(data, scale) {
 	if (imageHeight * scale < clipHeight) {
 		scale = Math.max(scale, clipHeight / imageHeight);
 	}
-	return scale;
+	return scale
 }
 
 /**
@@ -104,12 +106,14 @@ export function calcImageSize(width, height, data) {
 		width: originWidth,
 		height: originHeight
 	} = data
+	const cw = clipWidth || originWidth
+	const ch = clipHeight || originHeight
 	if (imageWidth && imageHeight) {
-		if (imageWidth / imageHeight > (clipWidth || originWidth) / (clipWidth || originHeight)) {
+		if (imageWidth / imageHeight > cw / ch) {
 			imageHeight = clipHeight || originHeight;
 			imageWidth = (width / height) * imageHeight;
 		} else {
-			imageWidth = clipWidth || originWidth;
+			imageWidth = cw;
 			imageHeight = (height / width) * imageWidth;
 		}
 	} else {
@@ -149,10 +153,10 @@ export function clipTouchMoveOfCalculate(data, event) {
 		maxHeight,
 		minHeight
 	} = data;
-	maxWidth = maxWidth / 2;
-	minWidth = minWidth / 2;
-	minHeight = minHeight / 2;
-	maxHeight = maxHeight / 2;
+	maxWidth = uni.upx2px(maxWidth) // maxWidth / 2;
+	minWidth = uni.upx2px(minWidth) // minWidth / 2;
+	minHeight = uni.upx2px(minHeight) // minHeight / 2;
+	maxHeight = uni.upx2px(maxHeight) // maxHeight / 2;
 
 	let width = clipWidth,
 		height = clipHeight,
@@ -237,10 +241,8 @@ export function clipTouchMoveOfCalculate(data, event) {
  * 单指拖动图片计算偏移
  */
 export function imageTouchMoveOfCalcOffset(data, clientXForLeft, clientYForLeft) {
-	let left = clientXForLeft - data.touchRelative[0].x,
-		top = clientYForLeft - data.touchRelative[0].y;
 	return {
-		left,
-		top
+		left: clientXForLeft - data.touchRelative[0].x,
+		top: clientYForLeft - data.touchRelative[0].y
 	};
 }

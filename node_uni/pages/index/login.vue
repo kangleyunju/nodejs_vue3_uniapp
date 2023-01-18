@@ -50,6 +50,13 @@
 				this.type=this.type==1?2:1
 			},
 			submit(){
+        this.$login({
+          name:'hh',
+          nickname:'ff',
+          face:''
+        })
+        this.jump('/user/user')
+        return
 				this.$refs.form1.validate()
 				.then(res => {
 					if(this.type==1){

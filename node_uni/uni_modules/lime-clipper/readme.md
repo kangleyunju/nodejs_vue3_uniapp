@@ -2,7 +2,7 @@
 > uniapp 图片裁剪，可用于图片头像等裁剪处理  
 > [查看更多 站点1](https://limeui.qcoon.cn/#/clipper) <br>
 > [查看更多 站点2](http://liangei.gitee.io/limeui/#/clipper) <br>
-> Q群：806744170
+> Q群：1169785031
 
 
 ## 平台兼容
@@ -10,6 +10,10 @@
 | H5  | 微信小程序 | 支付宝小程序 | 百度小程序 | 头条小程序 | QQ 小程序 | App |
 | --- | ---------- | ------------ | ---------- | ---------- | --------- | --- |
 | √   | √          | √         | 未测       | √          | √      | √   |
+
+## 安装
+在市场导入**[图片剪刀](https://ext.dcloud.net.cn/plugin?id=3594)uni_modules**版本的即可，无需`import`
+
 
 
 ## 代码演示
@@ -217,4 +221,5 @@ export default {
 ## 打赏
 如果你觉得本插件，解决了你的问题，赠人玫瑰，手留余香。  
 
-![输入图片说明](https://cdn.jsdelivr.net/gh/liangei/image@latest/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
+![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/222521_bb543f96_518581.jpeg "微信图片编辑_20201122220352.jpg")
+![输入图片说明](https://static-6d65bd90-8508-4d6c-abbc-a4ef5c8e49e7.bspapp.com/image/wxplay.jpg "wxplay.jpg")

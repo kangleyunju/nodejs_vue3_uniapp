@@ -63,7 +63,8 @@
 			transform: translateX(-50%);
 			width: 100%;
 		}
-		*{
+		uni-page-body uni-view{
+      border: 1px solid red;
 			max-width: 375px;
 		}
 	}

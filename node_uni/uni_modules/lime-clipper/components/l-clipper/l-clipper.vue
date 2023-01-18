@@ -200,6 +200,7 @@ export default {
 			scale: 1,
 			angle: 0,
 			image: '',
+			imageInit: false,
 			sysinfo: {},
 			throttleTimer: null,
 			throttleFlag: true,
@@ -282,7 +283,7 @@ export default {
 			this.calcClipSize();
 		},
 		angle(val) {
-			this.animation = true;
+			this.animation = this.imageInit;
 			this.moveStop();
 			const { isLimitMove } = this;
 			if (isLimitMove && val % 90) {
@@ -320,14 +321,14 @@ export default {
 		width(width, oWidth) {
 			if (width !== oWidth) {
 				this.setDiffData({
-					clipWidth:  width / 2
+					clipWidth:  uni.upx2px(width) //width / 2
 				})
 			}
 		},
 		height(height, oHeight) {
 			if (height !== oHeight) {
 				this.setDiffData({
-					clipHeight:  height / 2
+					clipHeight: uni.upx2px(height) //height / 2
 				})
 			}
 		}
@@ -357,6 +358,7 @@ export default {
 					mask: true
 				});
 			}
+			this.imageInit = false
 			uni.getImageInfo({
 				src: url,
 				success: res => {
@@ -503,7 +505,10 @@ export default {
 			clearTimeout(this.timeClipCenter);
 			const timeClipCenter = setTimeout(() => {
 				if (!this.animation) {
-					this.setDiffData({animation: true})
+					this.setDiffData({
+						imageInit: true,
+						animation: true,
+					})
 				}
 				this.setClipCenter();
 			}, 800);
@@ -716,8 +721,10 @@ export default {
 		},
 		imageReset() {
 			const sys = this.sysinfo || uni.getSystemInfoSync();
+			this.moveStop()
 			this.scale = 1;
 			this.angle = 0;
+			
 			this.imageTop = sys.windowHeight / 2;
 			this.imageLeft = sys.windowWidth / 2;
 		},

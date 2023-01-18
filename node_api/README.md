@@ -8,9 +8,9 @@ nodejs，express，mysql
 有问题可以提Issue，或者发邮件：249042680@qq.com，觉得不错可以点个赞
 
 ### 仓库
-[gitee](https://gitee.com/kangleyunju/nodejs_vue3_uniapp)
-
-[github](https://github.com/kangleyunju/nodejs_vue3_uniapp)
+| gitee | github |
+| --- | --- |
+| [nodejs_vue3_uniapp](https://gitee.com/kangleyunju/nodejs_vue3_uniapp) | [nodejs_vue3_uniapp](https://github.com/kangleyunju/nodejs_vue3_uniapp) |
 
 ### 步骤
 先把test.sql导入mysql数据库，可以用Navicat Premium 12运行sql文件，如果报错，可能是node版本不是最新版
@@ -23,7 +23,7 @@ npm install
 ```
 npm start
 ```
-### 接口调试, 便于实时更新
+### 接口调试, 便于热更新
 ```
 npm i supervisor -g
 supervisor app.js
