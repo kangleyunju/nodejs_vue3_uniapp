@@ -13,8 +13,8 @@ nodejs，vue3，uniapp
 | [nodejs_vue3_uniapp](https://gitee.com/kangleyunju/nodejs_vue3_uniapp) | [nodejs_vue3_uniapp](https://github.com/kangleyunju/nodejs_vue3_uniapp) |
 
 ### 预览地址
-[node_vue后台](https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/node_vue/)
-[node_uni移动端](https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/node_uni/)
+* [node_vue后台](https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/node_vue/)
+* [node_uni移动端](https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/node_uni/)
 
 ### 截图
 ![image](./node_vue/images/1.png)
