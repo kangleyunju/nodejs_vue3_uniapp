@@ -42,12 +42,9 @@ router.get("/statistics", (req, res) => {
 })
 
 router.post("/edit", (req, res) => {
-	if(!req.body.per_id){
-		throw new Error('请登录')
-	}else{
+	checkLogin(req)
 		req.body.isReview=req.body.isReview?1:0
 		req.body.isWxLogin=req.body.isWxLogin?1:0
-		delete req.body.per_id
 		db.query("update sys set ?",[req.body], (err, result) => {
 			if (err) {
 				throw new Error(err)
@@ -58,16 +55,13 @@ router.post("/edit", (req, res) => {
 				})
 			}
 		})
-	}
+	
 })
 
 router.post("/edit", (req, res) => {
-	if(!req.body.per_id){
-		throw new Error('请登录')
-	}else{
+	checkLogin(req)
 		req.body.isReview=req.body.isReview?1:0
 		req.body.isWxLogin=req.body.isWxLogin?1:0
-		delete req.body.per_id
 		db.query("update sys set ?",[req.body], (err, result) => {
 			if (err) {
 				throw new Error(err)
@@ -78,7 +72,7 @@ router.post("/edit", (req, res) => {
 				})
 			}
 		})
-	}
+	
 })
 
 module.exports = router

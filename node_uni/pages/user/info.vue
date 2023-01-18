@@ -104,12 +104,6 @@
 		},
 		onLoad() {
 			this.endDate=this.changeTime()
-      this.userInfo={
-        face:'',
-        name:'12321'
-      }
-      this.show=true
-      return
 			if(this.hasLogin(2)){
 				this.user_id=this.getUserInfo().user_id
 				this.getUser()

@@ -1,6 +1,9 @@
 ### 简介
 nodejs操作数据库写接口，vue3后台，uniapp移动端，三合一，node_api接口，node_vue后台，node_uni移动端。
 
+### 平台
+pc，h5
+
 ### 技术栈
 nodejs，vue3，uniapp
 

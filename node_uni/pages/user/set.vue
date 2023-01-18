@@ -16,7 +16,7 @@
 				</view>
 			</view>
 		</view>
-		<xzw-centerPopup ref="centerPopup" :title="$t('logoutConfirm')" @confirnClick="toLogout()" />
+		<xzw-centerPopup ref="centerPopup" :title="$t('logoutConfirm')" @confirmClick="toLogout()" />
 	</view>
 </template>
 <script>

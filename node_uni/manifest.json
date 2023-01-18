@@ -1,7 +1,7 @@
 {
-    "name" : "node-uni",
+    "name" : "node_uni",
     "appid" : "__UNI__BCD60B5",
-    "description" : "node-uni",
+    "description" : "node_uni",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -86,7 +86,7 @@
         },
         "router" : {
             "mode" : "hash",
-            "base" : "/wap/"
+            "base" : "/node_uni/"
         },
         "optimization" : {
             "treeShaking" : {
@@ -103,5 +103,6 @@
         "template" : "",
         "domain" : "https://www.xunyoutest.com",
         "title" : "node-uni"
-    }
+    },
+    "locale" : "zh-Hans"
 }

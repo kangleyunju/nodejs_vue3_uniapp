@@ -1,13 +1,14 @@
 import store from './store.js'
+import testApi from "./testApi"
 
 export default {
 	data(){
 		return{
-			baseUrl:'http://localhost:7000',
-			isDev:true,
-			baseName:"我的世界",
-			baseWs:'ws://192.168.0.141:8000',
-			mainColor:'#F52B43'
+      baseName:"我的世界",
+			baseUrl:'http://localhost:7000',//node接口请求地址
+			baseWs:'ws://192.168.0.141:8000',//websocket地址
+			mainColor:'#F52B43',
+      isApi:11>2?true:false//是否调用node接口,如果false读取testApi假数据
 		}
 	},
 	methods: {
@@ -84,6 +85,7 @@ export default {
 			this.removeStorage('user')
 			store._mutations.logout[0]()
 			uni.closeSocket()
+      this.jump('/user/user')
 		},
 		getUserInfo(){
 			if(store.state.hasLogin){
@@ -187,77 +189,77 @@ export default {
 		},
 		$post(url, data = {}) {
 			var that=this
-			if (this.isDev) {
-				var link = this.baseUrl + '/' + url
-			} else {
-				var link = '/api/' + url
-			}
-			if (store.state.hasLogin) {
-				data.per_id= store.state.userInfo.user_id
-			}
+      var header={
+        "content-type": "application/x-www-form-urlencoded"
+      }
+      if (store.state.hasLogin) {
+        header.token= store.state.userInfo.user_id
+      }
 			var promise = new Promise((resolve, reject) => {
-				uni.request({
-					url: link,
-					data: data,
-					method: "POST",
-					header: {
-						"content-type": "application/x-www-form-urlencoded"
-					},
-					success: function(res) {
-						switch(res.statusCode){
-							case 404:
-								that.toast('接口不存在')
-								break;
-							case 200:
-								resolve(res.data)
-								break;
-							default:
-								that.toast(res.statusCode)
-								break;
-						}
-					},
-					error: function(error) {
-						reject("error")
-					}
-				})
+        if(this.isApi){
+          uni.request({
+            url: this.baseUrl + '/' + url,
+            data: data,
+            method: "POST",
+            header: header,
+            success: function(res) {
+              switch(res.statusCode){
+                case 404:
+                  that.toast('接口不存在')
+                  break;
+                case 200:
+                  resolve(res.data)
+                  break;
+                default:
+                  that.toast(res.statusCode)
+                  break;
+              }
+            },
+            error: function(error) {
+              reject("error")
+            }
+          })
+        }else{
+          resolve(testApi[url])
+        }
 			})
 			return promise
 		},
 		$get(url, data = {}) {
 			var that=this
-			if (this.isDev) {
-				var link = this.baseUrl + '/' + url
-			} else {
-				var link = '/api/' + url
-			}
-			if (store.state.hasLogin) {
-				data.per_id= store.state.userInfo.user_id
-			}
+      var header={
+        "content-type": "application/x-www-form-urlencoded"
+      }
+      if (store.state.hasLogin) {
+        header.token= store.state.userInfo.user_id
+      }
 			var promise = new Promise((resolve, reject) => {
-				uni.request({
-					url: link,
-					data: data,
-					method: "GET",
-					header: {
-						"content-type": "application/json"
-					},
-					success: function(res) {
-						switch(res.statusCode){
-							case 404:
-								that.toast('接口不存在')
-								break;
-							case 200:
-								resolve(res.data)
-								break;
-							default:
-								that.toast(res.statusCode)
-								break;
-						}
-					},
-					error: function(error) {
-						reject(error)
-					}
-				})
+        if(this.isApi){
+          uni.request({
+          	url: this.baseUrl + '/' + url,
+          	data: data,
+          	method: "GET",
+          	header: header,
+          	success: function(res) {
+          		switch(res.statusCode){
+          			case 404:
+          				that.toast('接口不存在')
+          				break;
+          			case 200:
+          				resolve(res.data)
+          				break;
+          			default:
+          				that.toast(res.statusCode)
+          				break;
+          		}
+          	},
+          	error: function(error) {
+          		reject(error)
+          	}
+          })
+        }else{
+          resolve(testApi.url)
+        }
 			})
 			return promise
 		}

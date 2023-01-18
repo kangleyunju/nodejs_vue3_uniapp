@@ -18,7 +18,7 @@ db.connect((err) => {
 	}
 })
 
-// 数据库断开重连
+// 数据库断开重连,测试中
 function handleDisconnect() {
   connection = mysql.createConnection(db)
   connection.connect(function(err) {
@@ -36,4 +36,15 @@ function handleDisconnect() {
     }
   })
 }
-handleDisconnect()
+// handleDisconnect()
+
+//统一检查是否登录
+function checkLogin(req){
+  if(!req.headers.token){
+  	throw new Error('请登录')
+  }
+}
+module.exports = {
+  db,
+  checkLogin
+}

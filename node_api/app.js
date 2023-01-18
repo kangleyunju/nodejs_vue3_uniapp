@@ -51,6 +51,10 @@ function broadcast(message) {
 	},100)
 }
 
+function aaa(){
+  console.log(1111111111)
+}
+
 // 中间件,表单提交
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());//x-www-form-urlencoded方式提交
@@ -90,7 +94,7 @@ app.use('/article', require('./api/article'))
 app.use(function(err, req, res, next) {
     res.json({
         code:250,
-		msg: err.message||err
+        msg: err.message||err
     })
 })
 

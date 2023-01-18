@@ -77,7 +77,8 @@
 				this.more="loading"
 				this.$get('goods/list',{
 					page:this.page,
-					status:"all"
+          row:10,
+					status:0//取审核中的商品
 				}).then((res)=>{
 					if(res.code==200){
 						this.list=this.list.concat(res.data)
@@ -106,6 +107,7 @@
 		onLoad() {
 			if(this.hasLogin(2)){
 				if(this.getUserInfo().is_admin==1){
+          this.userInfo=this.getUserInfo()
 					this.getList()
 				}else{
 					this.toast(this.$t('noPermission'))

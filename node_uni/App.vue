@@ -41,33 +41,62 @@
 		background-color: $grayColor;
 		color: #333333;	
 	}
-	html.pc{
-		width: 375px;
-		background-color: #ddd;
-		border-radius: 6px;
-		margin: 0 auto;
-		overflow-y: auto;
-		uni-app{
-			position: relative;
-			height: 100%;
-		}
-		.uni-page-head{
-			top:0;
-			left:50%;
-			transform: translateX(-50%);
-			width: 100%;
-		}
-		.uni-tabbar-bottom{
-			bottom:0;
-			left:50%;
-			transform: translateX(-50%);
-			width: 100%;
-		}
-		uni-page-body uni-view{
-      border: 1px solid red;
-			max-width: 375px;
-		}
-	}
+  	html.pc{
+  		width: 375px;
+  		background-color: #ddd;
+  		margin: 0 auto;
+  		overflow-y: auto;
+  		uni-app{
+  			position: relative;
+  			height: 100%;
+  		}
+  		.uni-page-head{
+  			top:0;
+  			left:50%;
+  			transform: translateX(-50%);
+  			width: 100%;
+  		}
+  		.uni-tabbar-bottom{
+  			bottom:0;
+  			left:50%;
+  			transform: translateX(-50%);
+  			width: 100%;
+  		}
+  		*{
+  			max-width: 375px;
+  		}
+  	}
+	// html.pc{
+		
+	// 	background-color: #ddd000;
+	// 	margin: 0 auto;
+	// 	overflow-y: auto;
+ //    display: flex;
+ //    justify-content: center;
+ //    *{
+ //      max-width: 375px;
+ //    }
+	// 	uni-app{
+	// 		position: relative;
+	// 		height: 100%;
+	// 	}
+	// 	.uni-page-head{
+	// 		top:0;
+	// 		left:50%;
+	// 		transform: translateX(-50%);
+	// 		width: 100%;
+	// 	}
+	// 	.uni-tabbar-bottom{
+	// 		bottom:0;
+	// 		left:50%;
+	// 		transform: translateX(-50%);
+	// 		width: 100%;
+	// 	}
+	// 	uni-page-body uni-view{
+ //      border: 1px solid red;
+	// 		max-width: 375px;
+	// 	}
+	// }
 	body::-webkit-scrollbar,
 	.uni-scroll-view::-webkit-scrollbar{
 		display: none;

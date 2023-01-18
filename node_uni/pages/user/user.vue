@@ -39,16 +39,21 @@
 		},
 		methods: {
 			getUser(){
-				this.$get('user/person', {
-					user_id:this.user_id
-				}).then(res => {
-					if (res.code == 200) {
-						this.userInfo=res.data
-						this.state=2
-					}else{
-						this.toast(res.msg)
-					}
-				})
+        if(this.isApi){
+          this.$get('user/person', {
+          	user_id:this.user_id
+          }).then(res => {
+          	if (res.code == 200) {
+          		this.userInfo=res.data
+          		this.state=2
+          	}else{
+          		this.toast(res.msg)
+          	}
+          })
+        }else{
+          this.userInfo=this.getUserInfo()
+          this.state=2
+        }
 			}
 		},
 		onShow(){

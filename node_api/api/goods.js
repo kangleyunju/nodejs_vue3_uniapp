@@ -1,13 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 const moment = require('moment')
 
 // 用户添加商品
 router.post("/add", (req, res) => {
-	if(!req.body.per_id){
-		throw new Error('请登录')
-	}else if (!req.body.product_name) {
+  checkLogin(req)
+	if (!req.body.product_name) {
 		throw new Error('请填写商品名称')
 	} else if (req.body.product_imgs.length==0) {
 		throw new Error('请上传商品图片')
@@ -17,9 +16,7 @@ router.post("/add", (req, res) => {
 			req.body.update_time = moment().valueOf()
 			req.body.product_image=req.body.product_imgs[0]
 			req.body.product_imgs=req.body.product_imgs.join(',')
-			req.body.store_id=req.body.per_id
 			req.body.status=result[0].isReview==1?0:3
-			delete req.body.per_id
 			db.query("insert into goods set ?", req.body, (err, result) => {
 				if (err) {
 					throw new Error(err)
@@ -70,9 +67,8 @@ router.get("/list",(req,res) => {
 	const page = parseInt(req.query.page || 1)
 	const row = parseInt(req.query.row || 10)
 	const keyword = req.query.keyword||''
-	const status = req.query.status?'='+req.query.status:'<6'
+	const status = req.query.status?'='+req.query.status:'<5'
 	const params = ['%'+keyword+'%',(page - 1) * row, row]
-
 	db.query("select goods.*,user.nickname as store_name from goods inner join user where goods.store_id = user.user_id and product_name like ? and goods.status"+ status +" limit ?,?",params,(err,result) => {
 		if(err){
 			throw new Error(err)
@@ -102,42 +98,38 @@ router.get("/list",(req,res) => {
 
 //我的商品
 router.get("/my",(req,res) => {
-	if(!req.query.per_id){
-		throw new Error('请登录')
-	}else{
-		const page = parseInt(req.query.page || 1)
-		const row = parseInt(req.query.row || 10)
-		const keyword = req.query.keyword||''
-		const params = ['%'+keyword+'%', req.query.per_id,(page - 1) * row, row]
-		db.query("select * from goods where product_name like ? and store_id = ? limit ?,?",params,(err,result) => {
-			if(err){
-				throw new Error(err)
-			}else{
-				db.query('select count(*) as records from goods where product_name like ? and store_id = ?', params ,(error, results)=> {
-					if (error) {
-						throw new Error(error)
-					} else {
-						res.json({
-							code: 200,
-							msg: "ok",
-							data: result,
-							page: page,
-							row: row,
-							records: results[0]['records'],
-							total:  Math.ceil(results[0]['records']/row)
-						})
-					}
-				})
-			}
-		})
-	}
+	checkLogin(req)
+  const page = parseInt(req.query.page || 1)
+  const row = parseInt(req.query.row || 10)
+  const keyword = req.query.keyword||''
+  const params = ['%'+keyword+'%', req.headers.token,(page - 1) * row, row]
+  db.query("select * from goods where product_name like ? and store_id = ? limit ?,?",params,(err,result) => {
+    if(err){
+      throw new Error(err)
+    }else{
+      db.query('select count(*) as records from goods where product_name like ? and store_id = ?', params ,(error, results)=> {
+        if (error) {
+          throw new Error(error)
+        } else {
+          res.json({
+            code: 200,
+            msg: "ok",
+            data: result,
+            page: page,
+            row: row,
+            records: results[0]['records'],
+            total:  Math.ceil(results[0]['records']/row)
+          })
+        }
+      })
+    }
+  })
 })
 
 // 修改商品信息
 router.post('/edit', (req, res) => {
-	if(!req.body.per_id){
-		throw new Error('请登录')
-	}else if(!req.body.product_id){
+  checkLogin(req)
+	if(!req.body.product_id){
 		throw new Error('商品id不存在')
 	}else if (!req.body.product_name) {
 		throw new Error('请填写商品名称')
@@ -147,8 +139,7 @@ router.post('/edit', (req, res) => {
 		req.body.product_image=req.body.product_imgs[0]
 		req.body.product_imgs=req.body.product_imgs.join(',')
 		req.body.update_time = moment().valueOf()
-		req.body.store_id=req.body.per_id
-		delete req.body.per_id
+		req.body.store_id=req.headers.token
 		db.query("select * from sys", (err, result) => {
 			req.body.status=result[0].isReview==1?0:3
 			db.query('update goods set ? where product_id = ?', [req.body, req.body.product_id], (err, result) => {
@@ -181,13 +172,11 @@ router.post('/edit', (req, res) => {
 
 // 修改商品状态
 router.post('/status', (req, res) => {
-	if(!req.body.per_id){
-		throw new Error('请登录')
-	}else if(!req.body.product_id){
+	checkLogin(req)
+  if(!req.body.product_id){
 		throw new Error('商品id不存在')
 	} else {
 		req.body.update_time = moment().valueOf()
-		delete req.body.per_id
 		db.query('update goods set ? where product_id = ?', [req.body, req.body.product_id], (err, result) => {
 			if (err) {
 				throw new Error(err)
