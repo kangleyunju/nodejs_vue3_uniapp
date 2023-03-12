@@ -32,12 +32,12 @@
 					<el-button type="text" icon="Setting" @click="examine(scope.row,scope.$index)" style="color:#5c9a2c" v-if="scope.row.status==0">审核</el-button>
 					<el-button type="text" icon="Setting" @click="change(scope.row,scope.$index,2)" style="color:#5c9a2c" v-if="scope.row.status==3">上架</el-button>
 					<el-button type="text" icon="Setting" @click="change(scope.row,scope.$index,3)" style="color:#5c9a2c" v-if="scope.row.status==4">恢复</el-button>
-					<el-button type="text" icon="Delete" @click="handleDelete(scope.row.product_id,scope.$index)" style="color:#ff4141" v-if="scope.row.status!=4">删除</el-button>
+					<el-button type="text" icon="Delete" @click="handleDelete(scope.row.product_id,scope.$index)" class="red" v-if="scope.row.status!=4">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		<div class="pagination">
-			<el-pagination hide-on-single-page background layout="total, prev, pager, next" :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
+			<el-pagination background layout="total, prev, pager, next,jumper"  :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
 		</div>
 		
 		<!-- 审核 -->
@@ -95,8 +95,9 @@
 						list.value= res.data
 						records.value=res.records
 						total.value=res.total
+            console.log(page)
 					}else{
-						ElMessage.error(res.msg);
+						ElMessage.error(res.msg)
 					}
 				})
 			}
@@ -208,9 +209,6 @@
 					}
 				}
 			}
-		}
-		.el-table{
-			margin:20px 0 0;
 		}
 	}
 </style>

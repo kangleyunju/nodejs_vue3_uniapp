@@ -11,7 +11,7 @@
 		padding: 0;
 		color:#333333;
 	}
-	
+	//禁复制
 	.noCopy{
 		scrollbar-color:#ccc;
 		scrollbar-width:thin;
@@ -21,18 +21,24 @@
 		-khtml-user-select: none;
 		user-select: none;
 	}
-	/* 滚动条样式 */
-	.scrollbar::-webkit-scrollbar {
-		width: 5px;
+	//谷歌滚动条样式
+	::-webkit-scrollbar {
+		height: 6px;
+		width: 6px;
 	}
-	.scrollbar::-webkit-scrollbar-thumb {
-		width: 3px;
-		background-color: #ccc;
-		border-radius: 35px;
+	//内条
+	::-webkit-scrollbar-thumb {
+		background: #d7d7d7;
+		border-radius: 10px;
 	}
-	.scrollbar::-webkit-scrollbar-track {
-		border: 1px solid #f1f1f1;
-		box-shadow: 0 0 2px #eee inset;
+	//外条
+	::-webkit-scrollbar-track {
+		background-color: #f2f2f2;
+	}
+	//火狐滚动条样式
+	* {
+		scrollbar-color: #d7d7d7 #f2f2f2; //滑块颜色  滚动条背景颜色
+		scrollbar-width: thin; // 滚动条宽度有三种：thin、auto、none
 	}
 	.xzw_word1{
 		overflow: hidden;
@@ -50,4 +56,9 @@
 		text-align: center;
 		margin: 10px 0 0;
 	}
+  .el-table{
+    .red:hover{
+      color: #f00;
+    }
+  }
 </style>

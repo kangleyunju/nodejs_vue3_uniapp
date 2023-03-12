@@ -31,9 +31,6 @@
 			Slide,
 			Tags
 		},
-		provide:{
-			message:'这是隔代传值的方法',
-		},
 		setup() {
 			const store = useStore();
 			const collapse = computed(() => store.state.collapse);
@@ -51,9 +48,9 @@
 
 <style lang="scss" scoped>
 	.homeContainer{
-		overflow-y: hidden;
 		.viewBox {
 			position: absolute;
+      min-width: 1000px;
 			left: 200px;
 			right: 0;
 			top: 70px;

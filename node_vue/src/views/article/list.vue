@@ -23,7 +23,7 @@
 			</el-table-column>
 		</el-table>
 		<div class="pagination">
-			<el-pagination hide-on-single-page background layout="total, prev, pager, next" :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
+			<el-pagination background layout="total, prev, pager, next" :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
 		</div>
 	</div>
 </template>

@@ -10,19 +10,20 @@
 			<el-table-column prop="update_time" label="更新时间" align="center" min-width="180"></el-table-column>
 			<el-table-column label="操作" min-width="100" align="center">
 				<template #default="scope">
-					<el-button type="text" icon="Edit" @click="handleEdit(scope.row)">编辑</el-button>
+					<el-button type="text" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="text" @click="handleDelete(scope.row.id,scope.$index)" class="red">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		<div class="pagination">
-			<el-pagination hide-on-single-page background layout="total, prev, pager, next" :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
+			<el-pagination background layout="total, prev, pager, next" :current-page="page" :page-size="row" :total="records" :page-count="total" @current-change="handlePageChange"/>
 		</div>
 	</div>
 </template>
 <script lang="ts">
-	import {defineComponent,getCurrentInstance,ref} from "vue";
-	import { useRouter } from "vue-router";
-	import { ElMessage } from "element-plus";
+	import {defineComponent,getCurrentInstance,ref} from "vue"
+	import { useRouter } from "vue-router"
+	import { ElMessage ,ElMessageBox} from "element-plus"
 	export default defineComponent({
 		setup() {
 			const that=getCurrentInstance().appContext.config.globalProperties
@@ -64,6 +65,27 @@
 					}
 				})
 			}
+      //删除
+      const handleDelete=(id,index)=>{
+      	ElMessageBox.confirm('确定要删除吗?','提示',{
+      		confirmButtonText: '确定',
+      		cancelButtonText: '取消',
+      		type: 'warning',
+      		buttonSize:'default'
+      	}).then(() => {
+          that.$post('diy/remove',{
+            id:id
+          }).then((res)=>{
+      			if(res.code==200){
+              list.value.splice(index,1)
+      			}else{
+      				ElMessage.error(res.msg)
+      			}
+      		})
+      	}).catch(() => {
+      	
+      	})
+      }
 			getList()
 			
 			return {
@@ -75,6 +97,7 @@
 				getList,
 				handleEdit,
 				handlePageChange,
+        handleDelete,
 				add
 			}
 		}
@@ -87,7 +110,7 @@
 			border-radius: 3px;
 		}
 		.el-table{
-			margin:20px 0 0;
+			margin:16px 0 0;
 		}
 	}
 </style>

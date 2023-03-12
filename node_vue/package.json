@@ -4,8 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
-		"preview": "vite preview"
+    "serve":"vite",
+		"build": "vue-tsc --noEmit && vite build"
 	},
 	"dependencies": {
 		"axios": "^0.25.0",

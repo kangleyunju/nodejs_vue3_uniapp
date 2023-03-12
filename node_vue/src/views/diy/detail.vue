@@ -1,39 +1,38 @@
 <template>
-	<div class="container">
+	<div class="phoneContainer noCopy" v-loading="loading"  element-loading-text="保存中.." element-loading-background="rgba(255, 255, 255,0.9)">
 		<div class="topBox">
-			<div class="topBox_left">
-				<el-button :type="leftSide?'primary':''" :icon="leftSide?'CaretRight':'CaretLeft'" @click="leftSide=!leftSide">组件</el-button>
+			<div class="left">
+				<el-button :type="fold?'primary':''" :icon="fold?'el-icon-caret-right':'el-icon-caret-left'" size="small" @click="fold=!fold">组件</el-button>
 			</div>
-			<div class="topBox_right">
-				<el-button type="info" icon="Setting" @click="setPage()">页面设置</el-button>
-				<el-button type="success" icon="View" @click="toView()">预览</el-button>
-				<el-button type="primary" icon="Download" @click="save()">保存</el-button>
-				<el-button type="danger" icon="FullScreen" @click="full()">全屏</el-button>
+			<div class="right">
+				<el-button type="info" icon="el-icon-s-tools" size="small" @click="setPage()">页面设置</el-button>
+				<el-button type="success" icon="el-icon-view" size="small" @click="toView()">预览</el-button>
+				<el-button type="primary" icon="el-icon-download" size="small" @click="toSave()">保存</el-button>
+				<el-button type="danger" icon="el-icon-full-screen" size="small" @click="full()">全屏</el-button>
 			</div>
 		</div>
 
 		<div class="mainBox">
-			<div class="leftTool" :class="{'leftTool-hide':!leftSide}">
+			<div class="leftTool" :class="{'hide':!fold}">
 				<h2 class="title">组件</h2>
-				<sortable class="sortable scrollbar" :list="compList" item-key="id" :animation="100" :sort="false" :group="{name: 'sort',pull:'clone'}" @start="isStMask = true" @end="isStMask = false">
-					<template  #item="{ element }">
-						<div :data-sorts="element.sorts"  class="comp">
-							<img :src="element.img_url" alt="无图片"/>
-							<span>{{ element.name }}</span>
+				<sortable class="sortableBox" :animation="100" :sort="false" :group="{name: 'sort',pull:'clone',put: false}" @start="isMask = true" @end="isMask = false">
+					<template>
+						<div :data-sorts="item.sorts" :key="index" v-for="(item, index) in compList" class="comp">
+							<svg-icon :iconClass="item.icon"/>
+							<span>{{ item.name }}</span>
 						</div>
 					</template>
 				</sortable>
 			</div>
-
 			<div class="centerPhone">
 				<div class="iframeBox">
-					<div class="iframeIn">
+					<div class="iframeIn" v-loading="iframeLoading" element-loading-text="加载中.." element-loading-background="rgba(255, 255, 255,0.9)">
 						<div class="header">
 							<div class="time">{{time}}</div>
 							<div class="battery">{{battery}}%<div><span :style="{width:battery+'%'}"></span></div></div>
 						</div>
-						<iframe v-if="show_iframe" name="iframe_name" ref="iframe" class="iframe" :src="iframe_url" frameborder="0"/>
-						<div class="sortableBox" v-show="isStMask">
+						<iframe :class="{'hide':iframeLoading}" ref="iframe" :src="iframeUrl" frameborder="0"/>
+						<div class="sortableBox" v-show="isMask">
 							<sortable class="sortable" item-key="id" :sort="false" :group="{name: 'sort'}"  @add="sortableEnd">
 								<template  #item="{ element }">
 									<div></div>
@@ -41,81 +40,117 @@
 							</sortable>
 						</div>
 					</div>
-				</div>
-	
-				<div class="buttonBox">
-					<div class="menu" @click="refreshPhone">
-						<img class="img-icon" src="@/assets/img/center_refresh.png">
-						<span class="tip">刷新</span>
-					</div>
-					<div class="menu" @click="deleteComp">
-						<img class="img-icon" src="@/assets/img/center_delete.png" v-if="activeComponent.unique>0">
-						<img class="img-icon" src="@/assets/img/center_delete2.png" v-else>
-						<span class="tip">删除</span>
-					</div>
-					<div class="menu" @click="topComp">
-						<img class="img-icon" src="@/assets/img/center_up.png" v-if="activeComponent.unique>0&&activeComponent.index>0">
-						<img class="img-icon" src="@/assets/img/center_up2.png" v-else>
-						<span class="tip">上移</span>
-					</div>
-					<div class="menu" @click="downComp">
-						<img class="img-icon" src="@/assets/img/center_down.png" v-if="activeComponent.unique>0&&(activeComponent.index+1<activeComponent.length&&this.activeComponent.length>1)">
-						<img class="img-icon" src="@/assets/img/center_down2.png" v-else>
-						<span class="tip">下移</span>
+					<div class="buttonBox">
+						<div class="menu active" :class="{'refresh':isRefresh}" @click="refreshPhone">
+							<i class="el-icon-refresh"/>
+							<span class="btnTip">刷新</span>
+						</div>
+						<div class="menu" @click="deleteComp" :class="{'active':activeComponent.unique>0}">
+							<i class="el-icon-delete"/>
+							<span class="btnTip">删除</span>
+						</div>
+						<div class="menu" @click="topComp" :class="{'active':activeComponent.unique>0&&activeComponent.index>0}">
+							<i class="el-icon-top" />
+							<span class="btnTip">上移</span>
+						</div>
+						<div class="menu" @click="downComp" :class="{'active':activeComponent.unique>0&&(activeComponent.index+1<activeComponent.length&&activeComponent.length>1)}">
+							<i class="el-icon-bottom"/>
+							<span class="btnTip">下移</span>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<DiyRight 
-				:componentChange="componentChange" 
-				:componentInit="componentInit" 
-				:is_set_page="is_set_page" 
-				:page_info="page_info" 
-				@save="save"
-				@setPageInfo="setPageInfo" 
-			/>
+			<diyRight :pageInfo="pageInfo" :attrObj="attrObj" @update="update" @setPageInfo="setPageInfo"/>
 		</div>
+		<!-- 预览弹窗 -->
+		<el-dialog :visible.sync="viewShow" width="416px" center top="0" fullscreen custom-class="viewDialog">
+			<i class="el-icon-close" @click="viewShow=false"/>
+			<div class="screenBox">
+				<div class="header">
+					<div class="time">{{time}}</div>
+					<div class="battery">{{battery}}%<div><span :style="{width:battery+'%'}"></span></div></div>
+				</div>
+				<div class="pageName">{{pageInfo.page_name||this.baseName}}</div>
+				<iframe :src="phoneUrl" frameborder="0" v-if="viewShow"/>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 <script>
 	import screenfull from "screenfull"
-	import compList from '@/utils/components.js'
-	import DiyRight from '@/components/diy-right.vue'
-
+	import compList from "@/views/diy/mixin/diy.js"
+	import diyRight from "@/views/diy/components/diyRight.vue"
 	export default {
 		components: {
-			DiyRight
+			diyRight
 		},
 		data() {
 			return {
-				compList: [],//左侧组件数组
-				leftSide: true, //是否显示左侧组件
-				is_set_page: false, // 是否是页面设置
+				compList: compList,//左侧组件数组
+				fold: true, //左侧组件是否折叠
+				loading: false,
 				activeComponent: {unique:0,index:0,length:0}, //选中的模块
-				page_info: {}, //完整页面数据
-				battery:'',//电量
+				pageInfo: {}, //完整页面数据
+				battery:50,//电量
 				time:'',//时间
-				componentInit: false,//初始化右侧组件属性
-				componentChange: true,// 控制右侧属性改变
-				show_iframe: true,//是否显示ifram
-				iframe_url: '',
-				isStMask: false,//蒙板
-				is_page_change: false// 标识iframe当前页面是否改变
+				iframeLoading: true,//是否显示ifram
+				iframeUrl: '',
+				isMask: false,//蒙板
+				attrObj:{},//选中的组件
+				isRefresh:false,//是否刷新中
+				viewShow:false//预览
 			}
 		},
 		mounted() {
-			window.addEventListener('message', this.acceptMessage, false);
+			window.addEventListener('message', this.acceptMessage, false)
+			setTimeout(()=>{
+				this.iframeLoading=false
+			},1500)
 		},
 		methods: {
-			// 监听 iframe 中方法
+			// 设置页面属性
+			setPage() {
+				this.activeComponent = {unique:0,index:0,length:0}
+				this.$refs.iframe.contentWindow.postMessage({
+					method: 'noComp'
+				}, '*')
+				this.setAttrObj()
+			},
+			//预览
+			toView(){
+				this.viewShow=true
+			},
+			// 保存布局
+			toSave() {
+				if(this.pageInfo.name==""){
+					this.$message.warning("页面名称必填")
+				}else{
+					this.loading=true
+					this.$refs.iframe.contentWindow.postMessage({
+						method: 'layoutSave',
+						data: JSON.parse(JSON.stringify(this.pageInfo))
+					}, '*')
+				}
+			},
+			// 保存回调
+			saveResult(e) {
+				this.loading=false
+				this.$message({
+					message: e==1?'保存成功':'保存失败',
+					type: e==1?'success':'error',
+					offset: 20
+				})
+			},
+			//全屏
+			full(){
+				screenfull.toggle()
+			},
+			// 监听 iframe 中传过来的方法
 			acceptMessage(event) {
 				let dat = event.data;
 				switch (dat.method) {
-					case 'saveSuccess'://保存成功
-						this.saveSuccess();
-						break;
-					case 'saveFail'://保存失败
-						this.saveFail();
+					case 'saveResult':
+						this.saveResult(dat.data);
 						break;
 					case 'parentGetUnique'://点击某个模块
 						this.parentGetUnique(dat.data);
@@ -125,35 +160,12 @@
 						break;
 				}
 			},
-			// 保存成功回调
-			saveSuccess() {
-				if (this.is_page_change) {
-					this.is_page_change = false;
-				}
-				this.$message({
-					message: '保存成功',
-					type: 'success',
-					offset: 20
-				})
-				this.refreshPhone()
-			},
-			// 保存失败回调
-			saveFail() {
-				this.$message({
-					message: '保存失败',
-					type: 'error',
-					offset: 20
-				})
-				this.refreshPhone();
-			},
-			// 刷新页面
-			refreshPhone() {
-				this.show_iframe = false;
-				this.initRightAttr();
-				this.activeComponent = {unique:0,index:0,length:0}
-				setTimeout(() => {
-					this.show_iframe = true;
-				}, 10)
+			update(data={}){
+				this.setAttrObj(data)
+				this.$refs.iframe.contentWindow.postMessage({
+					method: 'update',
+					data: data
+				}, '*')
 			},
 			// 点击某个模块
 			parentGetUnique(data) {
@@ -164,89 +176,73 @@
 					} else {
 						this.activeComponent.unique = item.unique
 					}
-					localStorage.setItem('attr_obj', JSON.stringify(item));
-					this.componentChange = !this.componentChange;
+					this.setAttrObj(item)
 				}
-				
 				this.activeComponent.index=data.index
 				this.activeComponent.length=data.length
-				this.is_set_page = false;
 			},
-			//获取页面信息
+			//接收页面信息
 			sendPageData(e) {
-				this.page_info = e
+				this.pageInfo = e
 			},
-			//全屏
-			full(){
-				screenfull.toggle()
+			// 监听组件被拉入 iframe 中
+			sortableEnd(evt) {
+				let sorts = evt.clone.dataset.sorts//被拖入的组件名称
+				let data = this.compList.find((item)=>{
+					return item.sorts==sorts
+				})
+				this.$refs.iframe.contentWindow.postMessage({
+					method: 'addComponent',
+					data: data
+				}, '*')
 			},
 			// 设置页面信息
 			setPageInfo(){
 				this.$refs.iframe.contentWindow.postMessage({
 					method: 'setPageInfo',
-					data: JSON.parse(JSON.stringify(this.page_info))
+					data: JSON.parse(JSON.stringify(this.pageInfo))
 				}, '*');
 			},
-			//预览
-			toView(){
-				window.open(this.phoneUrl,"_blank");      
+			setAttrObj(data={}){
+				localStorage.setItem('attrObj', JSON.stringify(data))
+				this.attrObj = data
 			},
-
-			save(flag) {
-				let dat = {};
-				if (flag == 1) {
-					//更新布局,不调用接口
-					dat = JSON.parse(localStorage.getItem('attr_obj'));
+			// 刷新页面
+			refreshPhone() {
+				if(!this.isRefresh){
+					this.isRefresh=true
+					this.iframeLoading=true
+					this.activeComponent = {unique:0,index:0,length:0}
+					this.setAttrObj()
 					this.$refs.iframe.contentWindow.postMessage({
-						method: 'update',
-						data: dat,
+						method: 'getDiy',
+						data:{
+							id:1
+						}
 					}, '*');
-				} else {
-					// 保存布局,调用接口
-					this.$refs.iframe.contentWindow.postMessage({
-						method: 'layoutSave',
-						data: JSON.parse(JSON.stringify(this.page_info)),
-					}, '*');
+					setTimeout(()=>{
+						this.iframeLoading=false
+						this.isRefresh=false
+					},1000)
 				}
-			},
-			// 监听组件被拉入 iframe 中
-			sortableEnd(evt) {
-				let sorts = evt.clone.dataset.sorts;//被拖入的组件名称
-				let attr_obj = {};
-				for (let i in compList) {
-					if (compList[i].sorts == sorts) {
-						attr_obj = compList[i];
-					}
-				}
-				this.is_page_change = true;
-				this.$refs.iframe.contentWindow.postMessage({
-					method: 'addComponent',
-					data: { attr_obj}
-				}, '*');
 			},
 			// 通过 unique 删除 iframe 组件
 			deleteComp() {
 				if(this.activeComponent.unique>0){
-					this.initRightAttr();
 					this.$refs.iframe.contentWindow.postMessage({
 						method: 'deleteComp'
-					}, '*');
+					}, '*')
 					this.activeComponent.unique = 0
 					this.activeComponent.length--
-					localStorage.setItem('attr_obj', {});
+					this.setAttrObj()
 				}
 			},
-			// 初始化右侧属性
-			initRightAttr() {
-				this.componentInit = !this.componentInit;
-			},
-
 			//上移
 			topComp() {
 				if(this.activeComponent.unique>0&&this.activeComponent.index>0){
 					this.$refs.iframe.contentWindow.postMessage({
 						method: 'topComp'
-					}, '*');
+					}, '*')
 				}
 			},
 			//下移
@@ -254,18 +250,8 @@
 				if(this.activeComponent.unique>0&&(this.activeComponent.index+1<this.activeComponent.length)&&this.activeComponent.length>1){
 					this.$refs.iframe.contentWindow.postMessage({
 						method: 'downComp'
-					}, '*');
+					}, '*')
 				}
-			},
-			// 设置页面属性
-			setPage() {
-				this.is_set_page = !this.is_set_page;
-				this.activeComponent = {unique:0,index:0,length:0}
-				localStorage.setItem('attr_obj', {});
-				this.initRightAttr();
-				this.$refs.iframe.contentWindow.postMessage({
-					method: 'noComp'
-				}, '*');
 			},
 			//手机时间
 			gettTime(){
@@ -274,9 +260,11 @@
 				hour=hour>9?hour:'0'+hour
 				minite=minite>9?minite:'0'+minite
 				this.time=hour+":"+minite
-				navigator.getBattery().then(res=>{
-					this.battery=Math.ceil(res.level*100)
-				})
+				if(navigator.getBattery){
+					navigator.getBattery().then(res=>{
+						this.battery=Math.ceil(res.level*100)
+					})
+				}
 				setInterval(()=>{
 					this.gettTime()
 				},60000)
@@ -284,67 +272,65 @@
 		},
 		created() {
 			let id=this.$route.query.id?this.$route.query.id:1
-			this.iframe_url=this.phoneUrl+'&id='+id
-			this.compList = compList;
+			this.iframeUrl=this.phoneUrl+"?edit=1&id="+id
 			this.gettTime()
 		}
 	}
 </script>
 <style lang="scss">
-	.container {
+	body{
+		overflow: hidden;
+	}
+	.phoneContainer {
+		min-width: 1150px;
 		.topBox {
-			box-shadow: 0 0 10px #ddd;
+			border-bottom:1px solid #d8d8d8;
 			display: flex;
 			justify-content: space-between;
 			height: 60px;
 			padding: 0 20px;
 			box-sizing: border-box;
-			.topBox_left{
+			background-color: #fff;
+			.left,.right{
 				display: flex;
 				align-items: center;
-				.el-button{
-					padding: 8px 10px;
-				}
-			}
-			.topBox_right{
-				display: flex;
-				align-items: center;
-				.el-button{
-					padding: 8px 10px;
-				}
 			}
 		}
 		.mainBox {
 			display: flex;
 			height: calc(100vh - 60px);
 			overflow: hidden;
+			min-height: 400px;
 			.leftTool {
-				width: 330px;
+				background-color: #fff;
+				width: 310px;
 				flex-shrink: 0;
 				height: 100%;
 				position: relative;
-				padding: 20px 0;
-				transition: width 0.2s;
-				&-hide{
+				transition: all 0.2s;
+				overflow: hidden;
+				&.hide{
 					width: 0;
-					transition: width 0.2s;
 				}
 				h2 {
-					margin-bottom: 20px;
 					text-align: center;
 					color: #777;
 					font-size: 20px;
-					width: 330px;
+					line-height:60px;
+					width: 310px;
 				}
-				.sortable {
-					max-height: calc(100% - 120px);
+				.sortableBox {
+					width: 310px;
+					max-height: calc(100% - 60px);
 					display: flex;
 					flex-wrap: wrap;
 					align-content: flex-start;
 					overflow-y: auto;
-					width: 330px;
-					padding: 0 25px;
+					padding: 0 16px 16px;
 					box-sizing: border-box;
+					.sortable {
+						border: 1px solid red;
+					}
 					.comp {
 						border: 1px solid #e8e8e8;
 						width: 90px;
@@ -361,11 +347,16 @@
 						box-sizing: border-box;
 						font-size: 14px;
 						&:hover {
-							border: 1px solid rgba(64, 158, 255, 0.5);
-							background-color: rgba(64, 158, 255, 0.1);
+							border: 1px solid var(--color-primary);
+							background-color: #edeefb;
+							* {
+								color:var(--color-primary);
+							}
 						}
-						img {
-							height: 22px;
+						.svg-icon {
+							height: 24px;
+							width: 24px;
+							color: #999;
 							margin-bottom: 10px;
 						}
 						span {
@@ -380,29 +371,26 @@
 				}
 			}
 			.centerPhone {
-				padding: 14px 20px;
-				position: relative;
+				padding: 24px 16px;
 				flex: 1;
-				height: 100%;
-				min-width: 420px;
+				width: 416px;
 				overflow: hidden;
 				background-color: #ddd;
 				box-shadow: 0 0 10px #999 inset;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				.iframeBox {
-					width: 402px;
-					height: 760px;
 					border: 8px solid #e1e1e1;
-					position: absolute;
 					box-shadow: 0 0 10px #999;
-					position: absolute;
+					position: relative;
 					z-index: 10;
-					left: 50%;
-					transform: translateX(-50%);
+					background-color: #e1e1e1;
 					.iframeIn {
 						position: relative;
 						width: 400px;
 						.header {
-							height: 25px;
+							height: 24px;
 							width: 100%;
 							display: flex;
 							align-items: center;
@@ -410,27 +398,43 @@
 							padding: 0 10px;
 							box-sizing: border-box;
 							font-size: 10px;
-							background-color: #e1e1e1;
 							.battery{
 								display: flex;
 								align-items: center;
 								div{
 									width: 24px;
-									height: 12px;
-									border: 1px solid #666;
+									height: 11px;	
 									border-radius: 4px;
 									margin-left: 4px;
+									background-color: #fff;
+									position:relative;
+									overflow: hidden;
+									&::after{
+										content:"";
+										position: absolute;
+										left:0;
+										right: 0;
+										top:0;
+										bottom: 0;
+										border: 1px solid #666;
+										border-radius: 4px;
+									}
 									span{
-										height: 100%;
+										border-radius:4px;
+										height:100%;
 										display: block;
 										background-color: #666;
 									}
 								}
 							}
 						}
-						.iframe {
-							width: 402px;
-							height: 736px;
+						iframe {
+							width: 400px;
+							height: calc(100vh - 152px);
+							max-height: 1000px;
+							&.hide{
+								opacity: 0;
+							}
 						}
 						.sortableBox {
 							position: absolute;
@@ -447,68 +451,165 @@
 							}
 						}
 					}
-				}
-				.buttonBox {
-					position: absolute;
-					top: 150px;
-					right: 30px;
-					width: 100px;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					.menu {
-						position: relative;
-						border-radius: 50%;
-						width: 45px;
-						height: 45px;
-						transition: all 0.5s;
-						background-color: #fff;
-						box-shadow: 0 0 10px #999;
-						cursor: pointer;
-						margin-bottom: 15px;
-						&:hover {
-							.tip {
-								animation: tipEff 1.5s ease-in;
-								animation-fill-mode: forwards;
-								display: block;
+					.buttonBox {
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%);
+						right:-110px;
+						width: 100px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						.menu {
+							position: relative;
+							border-radius: 50%;
+							width: 45px;
+							height: 45px;
+							transition: all 0.3s;
+							box-shadow: 0 0 6px #999;
+							background-color: #d8d8d8;
+							cursor: pointer;
+							margin-bottom: 15px;
+							font-size: 0;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							&.refresh{
+								.el-icon-refresh{
+									animation: rotate 1s;
+								}
 							}
-						}
-						.img-icon {
-							width: 100%;
-							height: 100%;
-							color: #409EFF;
-						}
-						
-						.tip {
-							position: absolute;
-							display: none;
-							left: -40px;
-							top: 50%;
-							transform: translateY(-50%);
-							z-index: 9999;
-							color: #777;
-						}
-						@keyframes tipEff {
-							0% {
-								opacity: 0;
-								left: -60px;
+							@keyframes rotate {
+								0%{
+									transform: rotate(0);
+								}
+								100%{
+									transform: rotate(360deg);
+								}
 							}
-							50% {
-								opacity: 1;
-								left: -40px;
+							&:last-child{
+								margin:0;
 							}
-							100% {
-								opacity: 0;
-								left: -60px;
+							&:hover {
+								&.active{
+									background-color: #7591fc;
+								}
+								.btnTip {
+									animation: tipEnter 1.5s ease-in;
+									display: block;
+								}
+							}
+							&.active{
+								background-color: var(--color-primary);
+							}
+							i{
+								font-size: 24px;
+								color:#fefefe;
+							}
+							.btnTip {
+								position: absolute;
 								display: none;
+								right: -40px;
+								top: 50%;
+								transform: translateY(-50%);
+								z-index: 9999;
+								color: #418aff;
+								font-size: 14px;
+								
+							}
+							@keyframes tipEnter {
+								0% {
+									opacity: 0;
+									right: -60px;
+								}
+								50% {
+									opacity: 1;
+									right: -40px;
+								}
+								100% {
+									opacity: 0;
+									right: -60px;
+								}
 							}
 						}
 					}
 				}
+
 			}
 		}
-	}
-	.el-loading-spinner i{
-		font-size: 30px;
+		.viewDialog{
+			border-radius: 0;
+			overflow: hidden;
+			.el-dialog__header{
+				display: none;
+			}
+			.el-icon-close{
+				position: absolute;
+				right:20px;
+				top:20px;
+				font-size:24px;
+				cursor:pointer;
+				&:hover{
+					color:var(--color-primary);
+				}
+			}
+			.screenBox{
+				border: 8px solid #666;
+				width: 400px;
+				height:calc(100vh - 16px);
+				margin: 0 auto;
+				background-color: #f8f8f8;
+				border-radius: 12px;
+				overflow: hidden;
+				.header {
+					height: 30px;
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					padding: 0 10px;
+					box-sizing: border-box;
+					font-size: 10px;
+					.battery{
+						display: flex;
+						align-items: center;
+						div{
+							width: 24px;
+							height: 11px;	
+							border-radius: 4px;
+							margin-left: 4px;
+							background-color: #fff;
+							position:relative;
+							overflow: hidden;
+							&::after{
+								content:"";
+								position: absolute;
+								left:0;
+								right: 0;
+								top:0;
+								bottom: 0;
+								border: 1px solid #666;
+								border-radius: 4px;
+							}
+							span{
+								border-radius:4px;
+								height:100%;
+								display: block;
+								background-color: #666;
+							}
+						}
+					}
+				}
+				.pageName{
+					line-height: 40px;
+					text-align: center;
+					font-size: 16px;
+				}
+				iframe{
+					height: calc(100vh - 90px);
+					width: 400px;
+				}
+			}
+		}
 	}
 </style>

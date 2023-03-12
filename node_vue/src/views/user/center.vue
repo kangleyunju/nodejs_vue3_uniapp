@@ -83,6 +83,7 @@
 				that.$get('user/person',{
 					user_id:store.state.userInfo.user_id
 				}).then(res => {
+          console.log(1111,res)
 					if (res.code == 200) {
 						userInfo.user_id=res.data.user_id
 						userInfo.face=res.data.face

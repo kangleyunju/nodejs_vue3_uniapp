@@ -61,7 +61,7 @@
 			const deleteItem=(index)=>{
 				form.product_imgs.splice(index,1)
 			}
-
+      // 设置为主图
 			const beMain=(e)=>{
 				if(e>0){
 					let tmp=form.product_imgs[e]
@@ -84,9 +84,9 @@
 				form.product_detail=editor.txt.html()
 				if(form.product_name==''){
 					ElMessage.error('商品名称必填')
-				}else if(form.product_imgs.length==0){
+				} else if(form.product_imgs.length==0){
 					ElMessage.error('请上传商品图片')
-				}else{
+				} else{
 					if(product_id.value>0){
 						that.$post('goods/edit',{
 							product_id:product_id.value,
@@ -113,6 +113,8 @@
 							sale_price:form.sale_price,
 							product_imgs:form.product_imgs
 						}).then(res => {
+              console.log('添加返回',res)
+              return
 							if (res.code == 200) {
 								ElMessage.success(res.msg)
 								router.push('/goods/list')
@@ -243,11 +245,12 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					border: 2px solid #d9d9d9;
+					border: 1px solid #dcdfe6;
 					font-size: 20px;
 					box-sizing: border-box;
 					margin: 0 10px 0 0;
 					position: relative;
+          border-radius: 4px;
 					.close{
 						position: absolute;
 						right: -10px;
@@ -274,11 +277,17 @@
 						line-height: 18px;
 						text-align: center;	
 						transition: all 0.2s ease-in;
+            cursor: pointer;
+            opacity: 0.8;
+            &:hover{
+              opacity: 1;
+            }
 					}
 					&.active{
 						border-color: #ff4545 !important;
 						.tag{
 							background-color: #ff4545;
+              opacity: 1;
 						}	
 					}
 					.el-image{

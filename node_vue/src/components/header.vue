@@ -5,7 +5,7 @@
 				<el-icons name="expand" v-if="collapse"/>
 				<el-icons name="fold" v-else/>
 			</div>
-			<div class="logo">后台管理系统</div>
+			<div class="logo">后台</div>
 		</div>
 
 		<div class="header-right">
@@ -17,6 +17,7 @@
 				</div>
 				<template #dropdown>
 					<el-dropdown-menu>
+            <el-dropdown-item @click="goGit">github</el-dropdown-item>
 						<el-dropdown-item @click="goUser">个人中心</el-dropdown-item>
 						<el-dropdown-item @click="logout">退出登录</el-dropdown-item>
 					</el-dropdown-menu>
@@ -41,6 +42,10 @@
 				userInfo.nickname=n.nickname
 				userInfo.face=n.face
 			},{deep:true})
+      
+      const goGit=()=>{
+      	window.open('https://github.com/kangleyunju/nodejs_vue3_uniapp')
+      }
 			
 			const goUser=()=>{
 				router.push('/user/center')
@@ -63,9 +68,10 @@
 				if (document.body.clientWidth < 1200) {
 					collapseChage();
 				}
-			});
+			})
 
 			return {
+        goGit,
 				goUser,
 				logout,
 				userInfo,
@@ -79,7 +85,7 @@
 	.headerContainer {
 		width: 100%;
 		height: 70px;
-		min-width: 400px;
+		min-width: 1000px;
 		font-size: 22px;
 		color: #fff;
 		position: fixed;

@@ -9,11 +9,12 @@ import * as elementIcon from '@element-plus/icons-vue'//移入图标
 import ElIcons from '@c/icon.vue'//封装elIcon
 import methods from '@/utils/methods.js'//引入公共方法
 import VueDraggable from 'vuedraggable'//拖拽
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'//国际化
 
 
 const app = createApp(App);
 
+//定义一些全局方法和变量
 app.config.globalProperties.baseUrl = methods.baseUrl
 app.config.globalProperties.$get = methods.$get
 app.config.globalProperties.$post = methods.$post
@@ -23,7 +24,6 @@ app.config.globalProperties.removeStorage = methods.removeStorage
 app.config.globalProperties.$uploadImg = methods.$uploadImg
 app.config.globalProperties.changeTime = methods.changeTime
 app.config.globalProperties.phoneUrl = "http://localhost:9000/wap/#/pages/index/index?edit=1"
-
 
 
 // 统一注册el-icon图标
