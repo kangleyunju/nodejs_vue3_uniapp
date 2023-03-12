@@ -1,8 +1,31 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 
+//首页统计
+router.get("/statistics", (req, res) => {
+	db.query('select count(*) as records from user',(err, results) => {
+		if (err) {
+			throw new Error(err)
+		} else {
+			let data={
+				person:results[0]['records'],
+        vip:results[0]['records'],
+				todayOrder:(Math.random()*100).toFixed(0),
+				monthOrder:(Math.random()*1000).toFixed(0),
+        todayMoney:(Math.random()*10000).toFixed(0),
+        monthMoney:(Math.random()*100000).toFixed(0)
+			}
+			res.json({
+				code: 200,
+				msg: 'ok',
+				data: data
+			})
+		}
+	})
+})
 
+//获取系统设置
 router.get("/list", (req, res) => {
 	db.query("select * from sys", (err, result) => {
 		if (err) {
@@ -21,26 +44,7 @@ router.get("/list", (req, res) => {
 	})
 })
 
-//首页统计
-router.get("/statistics", (req, res) => {
-	db.query('select count(*) as records from user',(err, results) => {
-		if (err) {
-			throw new Error(err)
-		} else {
-			let data={
-				person:results[0]['records'],
-				todayMoney:(Math.random()*10000).toFixed(2),
-				todayOrder:(Math.random()*100).toFixed(0)
-			}
-			res.json({
-				code: 200,
-				msg: 'ok',
-				data: data
-			})
-		}
-	})
-})
-
+//修改系统设置
 router.post("/edit", (req, res) => {
 	checkLogin(req)
 		req.body.isReview=req.body.isReview?1:0
@@ -55,24 +59,6 @@ router.post("/edit", (req, res) => {
 				})
 			}
 		})
-	
-})
-
-router.post("/edit", (req, res) => {
-	checkLogin(req)
-		req.body.isReview=req.body.isReview?1:0
-		req.body.isWxLogin=req.body.isWxLogin?1:0
-		db.query("update sys set ?",[req.body], (err, result) => {
-			if (err) {
-				throw new Error(err)
-			} else {
-				res.json({
-					code: 200,
-					msg: 'ok'
-				})
-			}
-		})
-	
 })
 
 module.exports = router

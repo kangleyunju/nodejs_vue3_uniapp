@@ -81,11 +81,11 @@ export default {
 			store._mutations.login[0](userInfo)
 			this.setStorage('user',userInfo)
 		},
-		$logout(){
+		$logout(url){
 			this.removeStorage('user')
 			store._mutations.logout[0]()
 			uni.closeSocket()
-      this.jump('/user/user')
+      this.jump(url||'/user/user')
 		},
 		getUserInfo(){
 			if(store.state.hasLogin){
@@ -188,6 +188,7 @@ export default {
 			})
 		},
 		$post(url, data = {}) {
+      console.log('neiring',data)
 			var that=this
       var header={
         "content-type": "application/x-www-form-urlencoded"

@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 const moment = require('moment')
+
 //列表
 router.get("/list", (req, res) => {
   const page = parseInt(req.query.page || 1)
@@ -62,7 +63,6 @@ router.get("/detail", (req, res) => {
 })
 // 编辑
 router.post("/edit", (req, res) => {
-  checkLogin(req)
   req.body.author = "平台"
   req.body.update_time = moment().valueOf()
   db.query('update article set ? where id = ?', [req.body, req.body.id], (err, result) => {

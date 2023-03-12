@@ -4,6 +4,7 @@ const multer = require('multer') //文件上传
 const path = require('path') //路径
 const moment = require('moment') //时间
 const fs = require('fs') //判断文件夹
+
 // 创建存储对象
 const storage = multer.diskStorage({
   // 配置保存文件的路径

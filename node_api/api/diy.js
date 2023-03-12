@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 const moment = require('moment')
+
+//列表
 router.get("/list", (req, res) => {
   const page = parseInt(req.query.page || 1)
   const row = parseInt(req.query.row || 10)
@@ -31,6 +33,8 @@ router.get("/list", (req, res) => {
     }
   })
 })
+
+//详情
 router.get("/detail", (req, res) => {
   if (!req.query.id) {
     res.json({
@@ -59,6 +63,8 @@ router.get("/detail", (req, res) => {
     })
   }
 })
+
+//编辑
 router.post("/edit", (req, res) => {
   req.body.update_time = moment().valueOf()
   db.query('update diy set ? where id = ?', [req.body, req.body.id], (err, result) => {
@@ -72,6 +78,8 @@ router.post("/edit", (req, res) => {
     }
   })
 })
+
+//添加
 router.post("/add", (req, res) => {
   checkLogin(req)
   req.body.name = '页面名称'
@@ -89,6 +97,21 @@ router.post("/add", (req, res) => {
           msg: 'ok',
           data: result[0]
         })
+      })
+    }
+  })
+})
+
+//删除
+router.post("/remove", (req, res) => {
+  checkLogin(req)
+  db.query('delete from diy where id = ?', [req.body.id], (err, result) => {
+    if (err) {
+      throw new Error(err)
+    } else {
+      res.json({
+        code: 200,
+        msg: '删除成功'
       })
     }
   })

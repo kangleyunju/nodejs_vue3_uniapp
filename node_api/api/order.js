@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 
 // 查询订单列表,page页码,row每页几条数据,keyword查询的商品名称
 router.get("/list",(req,res) => {

@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../db.js')
+const {db,checkLogin} = require('../db.js')
 const moment = require('moment')
+
 // 查询用户列表,page页码,row每页几条数据,keyword查询用户名字,order年龄升序asc和降序desc
 router.get("/list", (req, res) => {
   const page = parseInt(req.query.page || 1)

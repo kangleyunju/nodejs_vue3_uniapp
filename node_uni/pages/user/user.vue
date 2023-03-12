@@ -46,7 +46,12 @@
           	if (res.code == 200) {
           		this.userInfo=res.data
           		this.state=2
-          	}else{
+          	}else if(res.code==400){
+              this.toast(res.msg)
+              setTimeout(()=>{
+                this.$logout('/index/login')
+              },2000)
+            }else{
           		this.toast(res.msg)
           	}
           })

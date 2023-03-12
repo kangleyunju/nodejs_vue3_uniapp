@@ -51,10 +51,6 @@ function broadcast(message) {
 	},100)
 }
 
-function aaa(){
-  console.log(1111111111)
-}
-
 // 中间件,表单提交
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());//x-www-form-urlencoded方式提交
@@ -69,26 +65,20 @@ const ip=network[Object.keys(network)[0]][1].address
 const path = require('path')
 app.use(express.static(path.join(__dirname,'/')))
 
-//用户相关接口
-app.use('/user', require('./api/user'))
-
-//图片上传接口
-app.use('/upload', require('./api/upload'))
-
-//订单接口
-app.use('/order', require('./api/order'))
-
-//商品接口
-app.use('/goods', require('./api/goods'))
-
-//系统接口
-app.use('/sys', require('./api/sys'))
-
-//装修接口
-app.use('/diy', require('./api/diy'))
-
 //文章接口
 app.use('/article', require('./api/article'))
+//装修接口
+app.use('/diy', require('./api/diy'))
+//商品接口
+app.use('/goods', require('./api/goods'))
+//订单接口
+app.use('/order', require('./api/order'))
+//系统接口
+app.use('/sys', require('./api/sys'))
+//图片上传接口
+app.use('/upload', require('./api/upload'))
+//用户相关接口
+app.use('/user', require('./api/user'))
 
 //统一错误处理
 app.use(function(err, req, res, next) {
@@ -98,13 +88,12 @@ app.use(function(err, req, res, next) {
     })
 })
 
-
 const nodeServer=app.listen(7000, function() {
 	const host = nodeServer.address().address;
 	const port = nodeServer.address().port;
 	console.log("Localhost:","http://localhost:" + port)
 	console.log("Network:  ","http://" + ip+ ':'+port)
-	global.baseUrl="http://" + ip+ ':'+port//设置全局变量
+	global.baseUrl="http://localhost:"+port//设置全局变量
 })
 
 
