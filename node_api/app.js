@@ -27,8 +27,7 @@ function broadcast(message) {
 	let onLine=io._server._connections
 	let send={
 		type:"system",
-		onLine:onLine,
-		data:""
+		onLine:onLine
 	}
 	switch(message.type){
 		case "login":
@@ -37,6 +36,9 @@ function broadcast(message) {
 		case "logout":
 			send.data=message.nickname+'离开了聊天室'
 			break;
+    case "ping":
+    	send.type="pong"
+    	break;
 		case "say":
 			send.type="say"
 			send.data=message.data
