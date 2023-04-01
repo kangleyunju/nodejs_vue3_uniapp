@@ -6,7 +6,7 @@ export default {
 		return{
       baseName:"我的世界",
 			baseUrl:'http://localhost:7000',//node接口请求地址
-			baseWs:'ws://192.168.0.141:8000',//websocket地址
+			baseWs:'ws://localhost:8000',//websocket地址
 			mainColor:'#F52B43',
       isApi:11>2?true:false//是否调用node接口,如果false读取testApi假数据
 		}
