@@ -1,6 +1,5 @@
 {
-  "dependencies": {
-    "sortablejs": "^1.14.0",
-    "vuedraggable": "^2.24.3"
-  }
+	"dependencies": {
+		"sortablejs": "^1.14.0"
+	}
 }

@@ -13,17 +13,16 @@ nodejs，express，mysql
 | [nodejs_vue3_uniapp](https://gitee.com/kangleyunju/nodejs_vue3_uniapp) | [nodejs_vue3_uniapp](https://github.com/kangleyunju/nodejs_vue3_uniapp) |
 
 ### 步骤
-先把test.sql导入mysql数据库，可以用Navicat Premium 12运行sql文件，如果报错，可能是node版本不是最新版
-
-### 下载
+* 先把test.sql导入mysql数据库，可以用Navicat或phpMyAdmin运行sql文件，如果报错，可能是node版本不是最新版
+* 下载
 ```
 npm install
 ```
-### 运行
+* 运行
 ```
 npm start
 ```
-### 接口调试, 便于热更新
+* 接口调试, 便于热更新
 ```
 npm i supervisor -g
 supervisor app.js

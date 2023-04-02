@@ -1,12 +1,12 @@
-import sortablejs from "sortablejs";
+import sortablejs from "sortablejs"
 export default {
 	data() {
 		return {
-			diyData :{
-				id: 0,//模板id
-				sorts: [],// 项目的布局数据（可改变）
-				page_name: "",//页面顶部标题
-				background_color:"#F8F8F8"//页面底色
+			diyData: {
+				id: 0, //模板id
+				sorts: [], // 项目的布局数据（可改变）
+				page_name: "", //页面顶部标题
+				background_color: "#F8F8F8" //页面底色
 			}
 		}
 	},
@@ -14,9 +14,9 @@ export default {
 		// 获取布局数据
 		async getDiy(id) {
 			this.noComp()
-			if(this.isApi){
-				await this.$get('diy/detail',{
-					id:id,
+			if (this.isApi) {
+				await this.$get('diy/detail', {
+					id: id
 				}).then(res => {
 					this.diyData = res.data
 					this.initSortable('xzw_sortable');
@@ -26,18 +26,18 @@ export default {
 					}, '*')
 					return this.diyData
 				})
-			}else{
+			} else {
 				this.diyData = this.getStorage('pageInfo')
-				if(this.diyData==""){
-					this.diyData={
+				if (this.diyData == "") {
+					this.diyData = {
 						id: id,
 						sorts: [],
-						name:"页面名称",
+						name: "页面名称",
 						page_name: "",
-						background_color:"#F8F8F8"
+						background_color: "#F8F8F8"
 					}
-				}else{
-					this.diyData.sorts=JSON.parse(this.diyData.sorts)
+				} else {
+					this.diyData.sorts = JSON.parse(this.diyData.sorts)
 				}
 				this.initSortable('xzw_sortable')
 				window.parent.postMessage({
@@ -76,19 +76,19 @@ export default {
 						new_index: old_index,
 						type: 'sort',
 					};
-					if(this.$state.diySelect.unique>0){
-						for(var i in this.diyData.sorts){
-							if(this.diyData.sorts[i].unique==this.$state.diySelect.unique){
-								var index=i
+					if (this.$state.diySelect.unique > 0) {
+						for (var i in this.diyData.sorts) {
+							if (this.diyData.sorts[i].unique == this.$state.diySelect.unique) {
+								var index = i
 							}
 						}
-						this.parentGetUnique(index,2)
+						this.parentGetUnique(index, 2)
 					}
 				}
 			}
 			// #ifdef H5
 			const el = await document.getElementById(id);
-			if(this.$state.editStatus){
+			if (this.$state.editStatus) {
 				sortablejs.create(el, options)
 			}
 			// #endif
@@ -106,7 +106,7 @@ export default {
 		},
 		// 监听父窗口请求
 		acceptMessage(event) {
-			let data=event.data.data
+			let data = event.data.data
 			switch (event.data.method) {
 				case 'setPageInfo':
 					this.setPageInfo(data);
@@ -133,59 +133,58 @@ export default {
 					this.noComp();
 					break;
 				case 'getDiy':
-					this.getDiy(event.data.id);
+					this.getDiy(data.id);
 					break;
 			}
 		},
 		//设置页面信息
-		setPageInfo(e){
-			this.diyData.background_color=e.background_color
+		setPageInfo(e) {
+			this.diyData.background_color = e.background_color
 		},
 		// 保存布局到数据库
 		async layoutSave(e) {
-			var params={
-				name:e.name,
-				page_name:e.page_name,
-				background_color:e.background_color,
-				path:e.path,
-				sorts:JSON.stringify(this.diyData.sorts),
-				id:e.id
+			console.log(123, e);
+			var params = {
+				name: e.name,
+				page_name: e.page_name,
+				background_color: e.background_color,
+				path: e.path,
+				sorts: JSON.stringify(this.diyData.sorts),
+				id: e.id
 			}
-			if(this.isApi){
-				await this.$post('diy/edit',data)
-				.then(res => {
-					if(res.code==200){
+			if (this.isApi) {
+				await this.$post('diy/edit', params).then(res => {
+					if (res.code == 200) {
 						window.parent.postMessage({
 							method: 'saveResult',
-							data:1
+							data: 1
 						}, '*');
-					}else{
+					} else {
 						window.parent.postMessage({
 							method: 'saveResult',
-							data:2
+							data: 2
 						}, '*')
 					}
 				})
-			}else{
-				this.setStorage('pageInfo',params)
-				setTimeout(()=>{
+			} else {
+				this.setStorage('pageInfo', params)
+				setTimeout(() => {
 					window.parent.postMessage({
 						method: 'saveResult',
-						data:1
+						data: 1
 					}, '*')
-				},1000)
+				}, 1000)
 			}
 		},
 		// 添加新组件
 		addComponent(attrObj) {
 			attrObj.unique = Math.floor((new Date()).getTime() / 1000);
 			this.diyData.sorts.splice(0, 0, attrObj);
-			if(this.$state.diySelect.unique>0){
-				for(var i in this.diyData.sorts){
-					if(this.diyData.sorts[i].unique==this.$state.diySelect.unique)
-					var index=i
+			if (this.$state.diySelect.unique > 0) {
+				for (var i in this.diyData.sorts) {
+					if (this.diyData.sorts[i].unique == this.$state.diySelect.unique) var index = i
 				}
-				this.parentGetUnique(index,2)
+				this.parentGetUnique(index, 2)
 			}
 		},
 		// 更新组件属性内容
@@ -220,7 +219,7 @@ export default {
 						item: sorts[k],
 					}
 					sorts.splice(k, 1);
-					this.parentGetUnique(0,1,{})
+					this.parentGetUnique(0, 1, {})
 				}
 			}
 		},
@@ -243,14 +242,14 @@ export default {
 				}
 			}
 			this.saveSort(new_index, old_index, id)
-			this.parentGetUnique(new_index,2)
+			this.parentGetUnique(new_index, 2)
 		},
 		//下移
 		downComp() {
 			let sorts = this.diyData.sorts;
 			var new_index;
 			var old_index;
-			var id= sorts.id
+			var id = sorts.id
 			for (let k in sorts) {
 				if (sorts[k].unique == this.$state.diySelect.unique) {
 					new_index = parseInt(k) + 1
@@ -264,55 +263,55 @@ export default {
 				}
 			}
 			this.saveSort(new_index, old_index, id)
-			this.parentGetUnique(new_index,2)
+			this.parentGetUnique(new_index, 2)
 		},
 		// 选中某个模块
-		activeGetUnique(item,index) {
-			if(this.$state.editStatus){
+		activeGetUnique(item, index) {
+			if (this.$state.editStatus) {
 				var name = item.sorts
-				var unique=item.unique
-				if(this.$state.diySelect.unique==unique){
-					var value={
-						unique:0,
-						index:index
+				var unique = item.unique
+				if (this.$state.diySelect.unique == unique) {
+					var value = {
+						unique: 0,
+						index: index
 					}
 					unique = -1
-					item={}
-				}else{
-					var value={
+					item = {}
+				} else {
+					var value = {
 						unique: unique,
-						index:index
+						index: index
 					}
 				}
 				this.$change({
-					name:'diySelect',
-					value:value
+					name: 'diySelect',
+					value: value
 				})
-				this.parentGetUnique(index,1,item)
+				this.parentGetUnique(index, 1, item)
 			}
 		},
 		// 传递给父窗口选中模块变化
-		parentGetUnique(index,state,item){
-			if(!item){
-				item=this.diyData.sorts[this.$state.diySelect.index]
+		parentGetUnique(index, state, item) {
+			if (!item) {
+				item = this.diyData.sorts[this.$state.diySelect.index]
 			}
 			window.parent.postMessage({
 				method: 'parentGetUnique',
 				data: {
-					item:item,
-					index:parseInt(index),
-					state:state,//只有选中是1
-					length:this.diyData.sorts.length
+					item: item,
+					index: parseInt(index),
+					state: state, //只有选中是1
+					length: this.diyData.sorts.length
 				}
 			}, '*')
 		},
 		//当设置页面属性时，取消选中的模块
-		noComp(){
+		noComp() {
 			this.$change({
-				name:'diySelect',
-				value:{
-					unique:0,
-					index:0
+				name: 'diySelect',
+				value: {
+					unique: 0,
+					index: 0
 				}
 			})
 		}

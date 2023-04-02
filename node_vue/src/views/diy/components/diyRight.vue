@@ -5,17 +5,17 @@
 		<div class="attributes" v-if="isPage">
 			<el-form label-width="80px" label-position="right">
 				<el-form-item label="页面名称" required>
-					<el-input v-model="pageInfo.name" placeholder="仅后台可见" maxlength="10" clearable/>
+					<el-input v-model="pageInfo.name" placeholder="仅后台可见" maxlength="10" clearable />
 				</el-form-item>
 				<el-form-item label="页面标题">
-					<el-input v-model="pageInfo.page_name" placeholder="手机端顶部标题" maxlength="15" clearable/>
+					<el-input v-model="pageInfo.page_name" placeholder="手机端顶部标题" maxlength="15" clearable />
 				</el-form-item>
 				<el-form-item label="页面路径">
-					<el-input v-model="pageInfo.path" placeholder="请输入页面路径" maxlength="20" clearable/>
+					<el-input v-model="pageInfo.path" placeholder="请输入页面路径" maxlength="20" clearable />
 				</el-form-item>
 				<el-form-item label="背景颜色">
-					<el-radio v-model="pageInfo.background_color" label="#F8F8F8">#F8F8F8</el-radio>
-					<el-radio v-model="pageInfo.background_color" label="#FFFFFF">#FFFFFF</el-radio>
+					<el-color-picker v-model="pageInfo.background_color" />
+					<div style="margin-left:12px">{{pageInfo.background_color}}</div>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -48,16 +48,16 @@
 						<el-color-picker v-model="attrObj.bgColor"></el-color-picker>
 					</el-form-item>
 					<el-form-item label="模块高度" :key="index" v-if="index=='height'&&attrObj.show">
-						<el-slider size="small" v-model="attrObj.height" :step="1" :min="attrObj.min||10" :max="attrObj.max||500"/>
+						<el-slider size="small" v-model="attrObj.height" :step="1" :min="attrObj.min||10" :max="attrObj.max||500" />
 					</el-form-item>
 					<el-form-item label="上间距" :key="index" v-if="index=='paddingTop'&&attrObj.show">
-						<el-slider size="small" v-model="attrObj.paddingTop" :step="1" :min="0" :max="100"/>
+						<el-slider size="small" v-model="attrObj.paddingTop" :step="1" :min="0" :max="100" />
 					</el-form-item>
 					<el-form-item label="下间距" :key="index" v-if="index=='paddingBottom'&&attrObj.show">
-						<el-slider size="small" v-model="attrObj.paddingBottom" :step="1" :min="0" :max="100"/>
+						<el-slider size="small" v-model="attrObj.paddingBottom" :step="1" :min="0" :max="100" />
 					</el-form-item>
 					<el-form-item label="圆角" :key="index" v-if="index=='radius'&&attrObj.show">
-						<el-slider size="small" v-model="attrObj.radius" :step="1" :min="0" :max="100"/>
+						<el-slider size="small" v-model="attrObj.radius" :step="1" :min="0" :max="100" />
 					</el-form-item>
 					<!-- 公告 -->
 					<el-form-item label="方向" :key="index" v-if="index=='notice_direction'&&attrObj.show">
@@ -97,7 +97,7 @@
 							<i class="el-icon-error" v-if="index2>0" @click="removeSwiper(index2)"></i>
 							<el-upload class="itemLeft" action="#" :show-file-list="false" :limit="1" accept="image/*" :before-upload="uploadSwiper">
 								<div class="img" v-if="item2.img==''">
-									<i class="el-icon-circle-plus"/>
+									<i class="el-icon-circle-plus" />
 									<div class="word">选择图片</div>
 									<div class="word2">355*{{attrObj.height}}</div>
 								</div>
@@ -111,16 +111,16 @@
 					<!-- 图片 -->
 					<el-form-item label="排列样式" :key="index" v-if="index=='imgType'&&attrObj.show" class="img_typeBox">
 						<el-radio v-model="attrObj.imgType" :label="1">
-							<img src="@/assets/diy/right_img_type1.png"/>
+							<img src="@/assets/diy/right_img_type1.png" />
 						</el-radio>
 						<el-radio v-model="attrObj.imgType" :label="2">
-							<img src="@/assets/diy/right_img_type2.png"/>
+							<img src="@/assets/diy/right_img_type2.png" />
 						</el-radio>
 						<el-radio v-model="attrObj.imgType" :label="3">
-							<img src="@/assets/diy/right_img_type3.png"/>
+							<img src="@/assets/diy/right_img_type3.png" />
 						</el-radio>
 						<el-radio v-model="attrObj.imgType" :label="4">
-							<img src="@/assets/diy/right_img_type4.png"/>
+							<img src="@/assets/diy/right_img_type4.png" />
 						</el-radio>
 					</el-form-item>
 					<el-form-item :key="index" v-if="index=='imgArr'&&attrObj.show" label-width="0" class="imgAddBox">
@@ -165,7 +165,7 @@
 							<i class="el-icon-error" v-if="index2>0" @click="removeIcon(index2)" />
 							<el-upload class="itemLeft" action="#" :show-file-list="false" :limit="1" accept="image/*" :before-upload="uploadIcon">
 								<div class="img" v-if="item2.img==''">
-									<i class="el-icon-circle-plus"  />
+									<i class="el-icon-circle-plus" />
 									<div class="word">选择图片</div>
 									<div class="word2">50*50</div>
 								</div>
@@ -197,7 +197,7 @@
 						<el-table :data="attrObj.goodsArr" style="width: 100%" border size="small" class="goodsTable" v-if="attrObj.goodsArr.length>0">
 							<el-table-column type="index" label="序号" width="46" align="center" />
 							<el-table-column label="商品信息" header-align="center">
-								<template slot-scope="scope">
+								<template #default="scope">
 									<div class="detail">
 										<el-image :src="scope.row.picture" />
 										<div class="info">
@@ -208,8 +208,8 @@
 								</template>
 							</el-table-column>
 							<el-table-column label="操作" align="center" width="46">
-								<template slot-scope="scope">
-									<i class="el-icon-delete-solid" @click="deleteItem(scope)" />
+								<template #default="scope">
+									<el-icons name="Delete" @click="deleteItem(scope)" />
 								</template>
 							</el-table-column>
 						</el-table>
@@ -286,7 +286,7 @@
 							<div class="empty" v-if="recods==0">商品空空的</div>
 						</div>
 						<div class="forward">
-							<i class="el-icon-right" />
+							<el-icons name="Right" />
 						</div>
 						<div class="goodsBox">
 							<div @click="chooseGood(item,2)" class="good select" v-for="(item,index) in goodsArr" :key="index">
@@ -312,7 +312,7 @@
 	export default {
 		props: {
 			pageInfo: {}, //页面信息
-			attrObj:{}//组件属性
+			attrObj: {} //组件属性
 		},
 		data() {
 			return {
@@ -332,8 +332,8 @@
 			}
 		},
 		watch: {
-			attrObj(n, o){
-				this.isPage=n.name?false:true
+			attrObj(n, o) {
+				this.isPage = n.name ? false : true
 			},
 			// 监听组件属性值改变
 			attr_change(n, o) {
@@ -473,12 +473,12 @@
 						data: [{
 							name: 'Apple iPhone 13 (A2634) 128GB 午夜色 支持移动联通电信5G 双卡双待手机',
 							sale_price: 5999.00,
-							sku_id:1,
+							sku_id: 1,
 							picture: 'https://img10.360buyimg.com/n1/s450x450_jfs/t1/128930/6/25398/106509/62286809Ecde9efc5/16e8ebc319a86f4c.jpg'
-						},{
+						}, {
 							name: '新疆阿克苏冰糖心苹果新鲜水果时令红富士苹果生鲜礼盒 10斤精选大果 80-85mm普通装',
 							sale_price: 64.00,
-							sku_id:2,
+							sku_id: 2,
 							picture: 'https://img13.360buyimg.com/n1/jfs/t1/68734/2/21512/117408/63199212Ec5d6c6fb/b4c90c1305cf043a.jpg'
 						}],
 						recods: 1
@@ -493,7 +493,7 @@
 				this.cate_id = e
 			},
 			getCate() {
-				if(this.isApi){
+				if (this.isApi) {
 					this.$get('/api/index.php/v1/product-category/get-tree').then((res) => {
 						var list = []
 						for (var i in res.data) {
@@ -519,8 +519,8 @@
 						}
 						this.cateList = list
 					})
-				}else{
-					this.cateList=[]
+				} else {
+					this.cateList = []
 				}
 			},
 			chooseGood(item, k) {
@@ -683,8 +683,8 @@
 						.itemLeft {
 							width: 94px;
 							line-height: 16px;
-							.el-upload--text{
-								width:100%;
+							.el-upload--text {
+								width: 100%;
 								.img {
 									font-size: 12px;
 									text-align: center;
@@ -701,7 +701,7 @@
 										font-size: 10px;
 									}
 								}
-								.el-image{
+								.el-image {
 									height: 76px;
 									width: 76px;
 								}
@@ -796,11 +796,11 @@
 								}
 							}
 						}
-						.el-icon-delete-solid {
+						.el-icon {
 							color: var(--color-primary);
 							font-size: 16px;
 							cursor: pointer;
-							&:hover{
+							&:hover {
 								color: var(--color-danger);
 							}
 						}

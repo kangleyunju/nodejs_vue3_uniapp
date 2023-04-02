@@ -19,14 +19,22 @@ vue3，elementplus，typescript，vite
 https://static-mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.next.bspapp.com/node_vue/
 
 ### 步骤
+* 初始化vite
 ```
 npm init vite@latest
+```
+* 安装element-plus
+```
 npm install element-plus --save
+```
+* 运行
+```
 npm run dev
+npm run serve
 ```
 
-### 后台用到echarts
-[echarts文档](https://echarts.apache.org/examples/zh)
+### echarts文档
+https://echarts.apache.org/examples/zh
 
 ### 常见问题
 * npm install报错?
