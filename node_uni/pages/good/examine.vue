@@ -59,7 +59,7 @@
 				this.$refs.centerPopup.open()
 			},
 			change(item, index, type) {
-				this.$refs.centerPopup.close()
+				this.$refs.centerPopup.close()                                    
 				this.$refs.examine.close()
 				this.$post('good/status', {
 					product_id: item.product_id,

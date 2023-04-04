@@ -10,7 +10,7 @@ export default {
       "nickname": "管理员",
       "birthday": "2023-01-18",
       "sex": 2,
-      "face": "https://portrait.gitee.com/uploads/avatars/user/1749/5247371_qiaoliumin_1628820172.png",
+      "face": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/48be0378-a264-4492-90e7-0d8f743d555d.jpg",
       "level": 1,
       "create_time": 1642404443745,
       "status": 1,
@@ -29,7 +29,7 @@ export default {
       "nickname": "mingzhen",
       "birthday": "Invalid date",
       "sex": 0,
-      "face": "https://portrait.gitee.com/uploads/avatars/user/1749/5247371_qiaoliumin_1628820172.png",
+      "face": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/48be0378-a264-4492-90e7-0d8f743d555d.jpg",
       "level": 1,
       "create_time": 1674030203510,
       "status": 1,
@@ -48,7 +48,7 @@ export default {
       "nickname": "yaxin",
       "birthday": "Invalid date",
       "sex": 0,
-      "face": "https://portrait.gitee.com/uploads/avatars/user/1749/5247371_qiaoliumin_1628820172.png",
+      "face": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/48be0378-a264-4492-90e7-0d8f743d555d.jpg",
       "level": 1,
       "create_time": 1674030666994,
       "status": 1,
@@ -67,7 +67,7 @@ export default {
       "nickname": "管理员",
       "birthday": "2023-01-18",
       "sex": 2,
-      "face": "http://192.168.0.141:7000/upload/20220210/1644467133947.jpg",
+      "face": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/48be0378-a264-4492-90e7-0d8f743d555d.jpg",
       "level": 1,
       "create_time": "2022-01-17",
       "status": 1,
@@ -103,7 +103,7 @@ export default {
       "nickname": "管理员",
       "birthday": "2023-01-18",
       "sex": 2,
-      "face": "http://192.168.0.141:7000/upload/20220210/1644467133947.jpg",
+      "face": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/48be0378-a264-4492-90e7-0d8f743d555d.jpg",
       "level": 1,
       "create_time": "2022-01-17",
       "status": 1,
@@ -140,8 +140,13 @@ export default {
       "background_color": "#FFFFFF"
     }
   },
+  //装修保存
+  "diy/edit": {
+    "code": 200,
+    "msg": "ok"
+  },
   //商品上架下架
-  "goods/status": {
+  "good/status": {
     "code": 200,
     "msg": "修改成功",
     "data": {
@@ -149,19 +154,19 @@ export default {
       "product_name": "倚天剑0",
       "origin_price": 23,
       "sale_price": 12,
-      "product_image": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg",
-      "product_imgs": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg,http://192.168.0.141:7000/upload/20220210/1644484486004.png",
+      "product_image": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/ddf73800-6f11-4b1e-9ea4-bdfcc399fde9.jpg",
+      "product_imgs": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f7ffce35-7358-44cc-a9dd-87f2098602db.jpg",
       "create_time": 1642648475607,
       "update_time": 1674034616717,
       "status": 2,
       "product_desc": "很好的枕头",
-      "product_detail": "<p><img src=\"http://192.168.0.141:7000/upload/20220210/1644485374775.png\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
+      "product_detail": "<p><img src=\"https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f32295cd-ccc9-479e-a40d-aee11d75e9a7.jpg\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
       "store_id": 10001,
       "like": 0
     }
   },
   //商品修改信息
-  "goods/status": {
+  "good/status": {
     "code": 200,
     "msg": "修改成功",
     "data": {
@@ -169,19 +174,19 @@ export default {
       "product_name": "倚天剑0",
       "origin_price": 23,
       "sale_price": 12,
-      "product_image": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg",
-      "product_imgs": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg,http://192.168.0.141:7000/upload/20220210/1644484486004.png",
+      "product_image": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/ddf73800-6f11-4b1e-9ea4-bdfcc399fde9.jpg",
+      "product_imgs": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f7ffce35-7358-44cc-a9dd-87f2098602db.jpg",
       "create_time": 1642648475607,
       "update_time": 1674034616717,
       "status": 2,
       "product_desc": "很好的枕头",
-      "product_detail": "<p><img src=\"http://192.168.0.141:7000/upload/20220210/1644485374775.png\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
+      "product_detail": "<p><img src=\"https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f32295cd-ccc9-479e-a40d-aee11d75e9a7.jpg\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
       "store_id": 10001,
       "like": 0
     }
   },
   //我的商品
-  "goods/my": {
+  "good/my": {
     "code": 200,
     "msg": "ok",
     "data": [{
@@ -189,13 +194,13 @@ export default {
       "product_name": "倚天剑0",
       "origin_price": 23,
       "sale_price": 12,
-      "product_image": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg",
-      "product_imgs": "http://192.168.0.141:7000/upload/20220210/1644484488127.jpg,http://192.168.0.141:7000/upload/20220210/1644484486004.png",
+      "product_image": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/ddf73800-6f11-4b1e-9ea4-bdfcc399fde9.jpg",
+      "product_imgs": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f7ffce35-7358-44cc-a9dd-87f2098602db.jpg",
       "create_time": 1642648475607,
       "update_time": 1674034616717,
       "status": 2,
       "product_desc": "很好的枕头",
-      "product_detail": "<p><img src=\"http://192.168.0.141:7000/upload/20220210/1644485374775.png\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
+      "product_detail": "<p><img src=\"https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f32295cd-ccc9-479e-a40d-aee11d75e9a7.jpg\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
       "store_id": 10001,
       "like": 0
     }],
@@ -203,5 +208,37 @@ export default {
     "row": 1,
     "records": 6,
     "total": 6
+  },
+  //商品列表
+  "good/list": {
+    "code": 200,
+    "msg": "ok",
+    "data": [{
+      "product_id": 1,
+      "product_name": "倚天剑0",
+      "origin_price": 23,
+      "sale_price": 12,
+      "product_image": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/ddf73800-6f11-4b1e-9ea4-bdfcc399fde9.jpg",
+      "product_imgs": "https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f7ffce35-7358-44cc-a9dd-87f2098602db.jpg",
+      "create_time": 1642648475607,
+      "update_time": 1674034616717,
+      "status": 2,
+      "product_desc": "很好的枕头",
+      "product_detail": "<p><img src=\"https://mp-2503170c-6f74-4217-ac1a-43133fb6d1b4.cdn.bspapp.com/VKCEYUGU-2503170c-6f74-4217-ac1a-43133fb6d1b4/f32295cd-ccc9-479e-a40d-aee11d75e9a7.jpg\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>",
+      "store_id": 10001,
+      "like": 0
+    }],
+    "page": 1,
+    "row": 1,
+    "records": 6,
+    "total": 6
+  },
+  //商品状态
+  "good/status": {
+    "code": 200,
+    "msg": "ok",
+    "data": {
+      "status": 3
+    }
   }
 }

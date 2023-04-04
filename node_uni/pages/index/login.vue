@@ -55,7 +55,6 @@
               name: this.formData1.name,
               password: this.formData1.password
             }).then(res => {
-              console.log('的登录', res)
               if (res.code == 200) {
                 this.$login(res.data)
                 this.jump('/user/user')

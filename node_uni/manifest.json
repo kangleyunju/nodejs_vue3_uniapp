@@ -100,7 +100,7 @@
                 }
             }
         },
-        "template" : "",
+        "template" : "index.html",
         "domain" : "https://www.xunyoutest.com",
         "title" : "node-uni"
     },
