@@ -53,6 +53,11 @@
 			"navigationBarTitleText": "%chatRoom%"
 		}
 	}, {
+		"path": "pages/user/live",
+		"style": {
+			"navigationBarTitleText": "一直播"
+		}
+	}, {
 		"path": "pages/user/info",
 		"style": {
 			"navigationBarTitleText": "%userInfo%"

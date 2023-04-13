@@ -7,7 +7,7 @@ export default {
 			baseUrl: 'http://localhost:7000', //node接口请求地址
 			baseWs: 'ws://localhost:8000', //websocket地址
 			mainColor: '#F52B43',
-			isApi: 1 > 2 ? true : false //是否调用node接口,如果没启动node_api接口,要改成false,读取testApi假数据,如果启动node_api接口,改成true
+			isApi: 11 > 2 ? true : false //是否调用node接口,如果没启动node_api接口,要改成false,读取testApi假数据,如果启动node_api接口,改成true
 		}
 	},
 	methods: {
@@ -186,7 +186,7 @@ export default {
 				})
 			})
 		},
-		$post(url, data = {}) {
+		$post(url, data = {}, type = 1) {
 			var that = this
 			var header = {
 				"content-type": "application/x-www-form-urlencoded"
@@ -197,7 +197,7 @@ export default {
 			var promise = new Promise((resolve, reject) => {
 				if (this.isApi) {
 					uni.request({
-						url: this.baseUrl + '/' + url,
+						url: type == 1 ? this.baseUrl + '/' + url : url,
 						data: data,
 						method: "POST",
 						header: header,
@@ -224,7 +224,7 @@ export default {
 			})
 			return promise
 		},
-		$get(url, data = {}) {
+		$get(url, data = {}, type = 1) {
 			var that = this
 			var header = {
 				"content-type": "application/x-www-form-urlencoded"
@@ -235,7 +235,7 @@ export default {
 			var promise = new Promise((resolve, reject) => {
 				if (this.isApi) {
 					uni.request({
-						url: this.baseUrl + '/' + url,
+						url: type == 1 ? this.baseUrl + '/' + url : url,
 						data: data,
 						method: "GET",
 						header: header,
