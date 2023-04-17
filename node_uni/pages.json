@@ -10,7 +10,12 @@
 	}, {
 		"path": "pages/index/login",
 		"style": {
-			"navigationBarTitleText": "%login%"
+			"navigationBarTextStyle": "white",
+			"navigationBarTitleText": "%login%",
+			"navigationBarBackgroundColor": "transparent",
+			"app-plus": {
+				"titleNView": false
+			}
 		}
 	}, {
 		"path": "pages/index/test",
@@ -22,7 +27,7 @@
 		"style": {
 			"navigationBarTitleText": "",
 			"app-plus": {
-				"titleNView": false
+				"titleNView": true
 			}
 		}
 	}, {

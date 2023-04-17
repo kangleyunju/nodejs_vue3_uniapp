@@ -12,13 +12,12 @@
 		</uni-popup>
 	</view>
 </template>
-
 <script>
 	export default {
-		name:"xzw-centerPopup",
+		name: "xzw-centerPopup",
 		props: {
 			title: '',
-			subTitle:'',
+			subTitle: '',
 			leftText: {
 				type: String,
 				default: '取消'
@@ -27,15 +26,15 @@
 				type: String,
 				default: '确定'
 			},
-			color:{
+			color: {
 				type: String,
 				default: ''
 			},
 			default: {
 				type: Boolean,
-				default:true
+				default: true
 			},
-			fontSize:{
+			fontSize: {
 				type: String,
 				default: '32upx'
 			}
@@ -43,26 +42,26 @@
 		data() {
 			return {
 				isShow: false,
-				ani:false,
-				useColor:''
+				ani: false,
+				useColor: ''
 			}
 		},
 		methods: {
 			open() {
 				this.$refs.xzwCenterPopup.open()
-				if(this.color){
-					this.useColor=this.color
-				}else{
-					this.useColor=this.mainColor
+				if (this.color) {
+					this.useColor = this.color
+				} else {
+					this.useColor = this.mainColor
 				}
 			},
 			close() {
 				this.$refs.xzwCenterPopup.close()
 			},
-			leftClick(){
-				if(this.default){
+			leftClick() {
+				if (this.default) {
 					this.close()
-				}else{
+				} else {
 					this.$emit("leftClick")
 				}
 			},
@@ -72,11 +71,13 @@
 		}
 	}
 </script>
-
 <style lang="scss">
 	.xzwCenterPopup {
-		.popup{
+		margin: 0 auto;
+		.uni-popup {
 			z-index: 1000;
+			width: 100%;
+			height: 100vh;
 		}
 		.centerPopupBox {
 			z-index: 1000;
@@ -93,7 +94,7 @@
 				font-size: 32upx;
 				padding: 74upx 20upx 20upx;
 			}
-			.subTitle{
+			.subTitle {
 				text-align: center;
 				font-size: 24upx;
 				padding: 0 20upx 20upx 20upx;
