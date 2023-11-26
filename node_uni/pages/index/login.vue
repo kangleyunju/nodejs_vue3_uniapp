@@ -1,5 +1,5 @@
 <template>
-	<view class="container" @click="$refs.video.play()">
+	<view class="container">
 		<view class="main">
 			<view class="title">{{$t('baseName')}}</view>
 			<uni-forms ref="form1" :rules="rules1" :value="formData1" validate-trigger="submit" class="formBox">
@@ -13,7 +13,7 @@
 			<view class="xzwBtn_dark" @click="submit">{{type==1?$t('login'):$t('register')}}</view>
 			<view class="tip">{{type==1?$t('noAccount'):$t('haveAccount')}}<text @click="change">{{type==1?$t('toRegister'):$t('toLogin')}}</text></view>
 		</view>
-		<video id="video" :style="{height:clientHight+'px'}" src="@/static/video/rizhao.mp4" :controls="false" loop :muted="false" ref="video" class="video" />
+		<video id="video" :style="{height:clientHight+'px'}" src="@/static/video/rizhao.mp4" :controls="false" loop :autoplay="true" :muted="true" ref="video" class="video" />
 	</view>
 </template>
 <script>
@@ -47,14 +47,10 @@
 			}
 		},
 		onLoad() {
-			const that = this
-			setTimeout(() => {
-				this.clientHight = window.innerHeight
+			this.clientHight = window.innerHeight
+			document.addEventListener("WeixinJSBridgeReady", function() {
 				this.$refs.video.play()
-				document.addEventListener("WeixinJSBridgeReady", function() {
-					this.$refs.video.play()
-				}, false)
-			}, 0)
+			}, false)
 		},
 		methods: {
 			change() {

@@ -24,7 +24,7 @@
 		<view class="line box" @click="navTo('/good/my')" v-if="state==2">{{$t('myGood')}}<uni-icons type="forward" /></view>
 		<view class="line box" @click="navTo('/good/examine')" v-if="state==2">{{$t('goodReview')}}<uni-icons type="forward" /></view>
 		<view class="line box" @click="navTo('/user/room')" v-if="state==2">{{$t('chatRoom')}}<uni-icons type="forward" /></view>
-		<view class="line box" @click="jump('/user/live')">一直播<uni-icons type="forward" /></view>
+		<view class="line box" @click="jump('/user/live')">{{$t('P001')}}<uni-icons type="forward" /></view>
 		<view class="line box" @click="jump('/user/set')">{{$t('set')}}<uni-icons type="forward" /></view>
 	</view>
 </template>

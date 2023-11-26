@@ -60,7 +60,7 @@
 	}, {
 		"path": "pages/user/live",
 		"style": {
-			"navigationBarTitleText": "一直播"
+			"navigationBarTitleText": "%P001%"
 		}
 	}, {
 		"path": "pages/user/info",
